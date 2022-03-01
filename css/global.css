@@ -1,0 +1,72 @@
+html{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+/* index page */
+
+.hovergray:hover{
+    background-color: rgb(43, 43, 43);
+}
+
+.background{
+    background-image: url('../img/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 2.5rem);
+    background-color: rgba(0, 0, 0, .6);
+    background-blend-mode: multiply;
+}
+
+.indexcontainer{
+    padding: 2rem;
+    animation-name: move;
+    animation-duration: 1s;
+}
+
+.backgroundcontainer{
+    height: calc(100vh - 2.5rem);
+}
+
+.indexdes{
+    color: rgba(255, 255, 255, 0.445);
+}
+
+a{
+    text-decoration: none;
+}
+@keyframes move {
+    from{
+        color: rgba(255, 255, 255, 0);
+        padding: 3rem;
+    }
+
+    to{
+        color: white;
+        padding: 2rem;
+
+    }
+}
+
+/*editor*/
+
+
+input{
+    height: 2rem;
+    outline: 0;
+    border: 1px solid black;
+}
+
+textarea{
+    height: 10rem;
+    width: 50%;
+    resize: none;
+    outline: none;
+}
