@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "chinese-conv": "^1.0.1",
+    "moment": "^2.29.1",
     "next": "^12.1.0",
     "react": "^17.0.2"
   },
