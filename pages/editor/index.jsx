@@ -5,13 +5,27 @@ import Book from "./components/Book";
 import Date from "./components/Date";
 import Page from "./components/Page";
 import Des from "./components/Des";
+import Login from "./components/Login";
 import Submit from "./components/Submit";
 import View from "./components/View";
 import { GOOGLE_SHEET_URL } from "../../env/config"
 import moment from "moment";
 import { change, howManyDaysLeft } from "./public/change";
+import { reactLocalStorage } from 'reactjs-localstorage';
 
 export default function Editor() {
+
+
+    let [passwordFromUser, setPasswordFromUser] = useState('');
+
+
+    
+ 
+
+    useEffect(()=>{
+        let password = reactLocalStorage.get('password') ? reactLocalStorage.get('password') : passwordFromUser
+        setPasswordFromUser(password)
+    },[])
 
     let [subject, setSubject] = useState([]);
     let [doing, setDoing] = useState('');
@@ -19,8 +33,14 @@ export default function Editor() {
     let [date, setDate] = useState('');
     let [pages, setPages] = useState('');
     let [des, setDes] = useState('');
+
+    
+
+    let [logDate, setLogDate] = useState('');
+
     let clickRef = useRef(false);
     let [clickStatus, setClickStatus] = useState(0);
+
     let [alert, setAlert] = useState(<div></div>);
 
     function clean() {
@@ -30,6 +50,7 @@ export default function Editor() {
         setDate('');
         setPages('');
         setDes('');
+        setLogDate('');
     }
 
     let todayYear = moment().format('YYYY')
@@ -44,25 +65,27 @@ export default function Editor() {
     useEffect(() => {
 
         if (spendDay == 'a few seconds ago') {
-            setDate('今天')
+            setLogDate('今天')
         } else if (spendDay == 'in a day') {
-            setDate('明天')
+            setLogDate('明天')
         } else if (spendDay == 'in 2 days') {
-            setDate('後天')
+            setLogDate('後天')
         } else if (spendDay == 'in 7 days') {
-            setDate('下禮拜')
+            setLogDate('下禮拜')
         } else {
+            //把 in xx days 的文字拿掉
             spendDay = spendDay.replace('in', '')
             spendDay = spendDay.replace('days', '')
             spendDay = Number(spendDay)
-            console.log(spendDay);
-            if (howManyDaysLeft(todayDay) + 7 > spendDay) {
-                if (howManyDaysLeft(todayDay) <= spendDay) {
-                    setDate('下星期' + change(DateDay))
-                } else {
-                    setDate('星期' + change(DateDay))
-                }
 
+            if (howManyDaysLeft(todayDay) + 6 > spendDay) {
+                if (howManyDaysLeft(todayDay) <= spendDay) {
+                    setLogDate('下星期' + change(DateDay))
+                } else {
+                    setLogDate('星期' + change(DateDay))
+                }
+            } else {
+                setLogDate(date);
             }
 
         }
@@ -74,28 +97,34 @@ export default function Editor() {
 
     useEffect(() => {
 
-        if (!clickRef.current || !pages) {
+        if (!clickRef.current) {
             clickRef.current = true
         } else {
-            let fetchUrl = `${GOOGLE_SHEET_URL}?year=${todayYear}&month=${todayMonth}&datetoday=${todayDate}&day=${todayDay}&subject=${subject}&action=${doing}&book=${book}&date=${date}&pages=${pages}&des=${des}&password=mouse0609`
+            let fetchUrl = `${GOOGLE_SHEET_URL}?year=${todayYear}&month=${todayMonth}&datetoday=${todayDate}&day=${todayDay}&subject=${subject}&action=${doing}&book=${book}&date=${logDate}&pages=${pages}&des=${des}&password=${passwordFromUser}&mode=select`
             fetch(fetchUrl).then((res) => {
                 clean()
-                return res.status
+                return res.text()
             }).then((status) => {
-                if (status == 200) {
+                if (status == 'ok') {
                     setAlert(
-                        <div className="alert alert-success" role="alert">
-                            <p>SUCCESS!!! It will be disappear few second later</p>
+                        <div className="alert alert-success d-flex align-items-center" role="alert">
+                            <p className="h3">SUCCESS!!! It will be disappear few second later</p>
+                        </div>
+                    )
+                } else if (status == 'password error') {
+                    setAlert(
+                        <div className="alert alert-warning d-flex align-items-center" role="alert">
+                            <p className="h3">Oops!!! Please try again. The password is wrong.</p>
                         </div>
                     )
                 } else {
                     setAlert(
-                        <div className="alert alert-danger" role="alert">
-                            <p>Oops!!! Please try again.</p>
+                        <div className="alert alert-success d-flex align-items-center" role="alert">
+                            <p className="h3">Oops!!! Please try again. {status}</p>
                         </div>
                     )
                 }
-                setTimeout(()=>{
+                setTimeout(() => {
                     setAlert(<div></div>);
                 }, 2000)
             })
@@ -106,13 +135,14 @@ export default function Editor() {
     return (
         <div className="container p-5">
             {alert}
-            <View subject={subject} doing={doing} book={book} date={date} pages={pages} des={des} />
+            <View subject={subject} doing={doing} book={book} date={logDate} pages={pages} des={des} />
             <Subject setSubject={setSubject} subject={subject} />
             <Doing setDoing={setDoing} />
             <Book setBook={setBook} />
             <Date setDate={setDate} />
             <Page setPages={setPages} pages={pages} />
             <Des setDes={setDes} des={des} />
+            <Login passwordFromUser={passwordFromUser} setPasswordFromUser={setPasswordFromUser} />
             <Submit setClickStatus={setClickStatus} />
         </div>
     )

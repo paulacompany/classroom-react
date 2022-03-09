@@ -16,6 +16,7 @@ function change(number){
     }
 }
 
+//剩餘到下禮拜的時間
 function howManyDaysLeft(number){
     if(number == 0){
         return 8

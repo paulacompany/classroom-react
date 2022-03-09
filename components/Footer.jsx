@@ -6,9 +6,7 @@ export default function Footer() {
     return (
         <>
             <footer className="bg-dark text-white w-100 d-flex flex-row align-items-center p-3 flex-wrap justify-content-between">
-                <div className="h-100 bg-secondary col mx-2">
-            
-                </div>
+                <iframe src="https://www.youtube.com/embed/7gOy-Fvz94A?list=OLAK5uy_kfpJesvl7azPWhkT8EVrtDh1S_MNMOGhA" className="col-3 h-100" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div className="col m-0 mx-2">
                     <p className="m-1">License</p>
                     <p className="m-1">Email</p>

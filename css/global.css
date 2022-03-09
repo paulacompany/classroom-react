@@ -22,7 +22,7 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     height: calc(100vh - 2.5rem);
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(0, 0, 0, 0.6);
     background-blend-mode: multiply;
 }
 
@@ -72,6 +72,37 @@ textarea{
     outline: none;
 }
 
-footer{
-    height: 15rem;
+
+/*setting*/
+
+.setting-container{
+    height: calc(100vh - 2.5rem);
+}
+
+.setting-container div{
+    width: 20rem;
+}
+
+
+/*about*/
+
+.about{
+    background-image: url('../img/about.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 2.5rem);
+    background-color: rgba(0, 0, 0, 0.9);
+    background-blend-mode: multiply;
+}
+
+
+/*look*/
+
+.lookContainer{
+    min-height: calc(100vh - 2.5rem);
+
+}
+
+.item{
+    list-style-type: decimal;
 }
