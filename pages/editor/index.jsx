@@ -8,7 +8,7 @@ import Des from "./components/Des";
 import Login from "./components/Login";
 import Submit from "./components/Submit";
 import View from "./components/View";
-import { GOOGLE_SHEET_URL } from "../../env/config"
+import GOOGLE_SHEET_URL from "../../env/config"
 import moment from "moment";
 import { change, howManyDaysLeft } from "./public/change";
 import { reactLocalStorage } from 'reactjs-localstorage';
@@ -108,19 +108,19 @@ export default function Editor() {
                 if (status == 'ok') {
                     setAlert(
                         <div className="alert alert-success d-flex align-items-center" role="alert">
-                            <p className="h3">SUCCESS!!! It will be disappear few second later</p>
+                            <p className="h5">SUCCESS!!! It will be disappear few second later</p>
                         </div>
                     )
                 } else if (status == 'password error') {
                     setAlert(
                         <div className="alert alert-warning d-flex align-items-center" role="alert">
-                            <p className="h3">Oops!!! Please try again. The password is wrong.</p>
+                            <p className="h5">Oops!!! Please try again. The password is wrong.</p>
                         </div>
                     )
                 } else {
                     setAlert(
-                        <div className="alert alert-success d-flex align-items-center" role="alert">
-                            <p className="h3">Oops!!! Please try again. {status}</p>
+                        <div className="alert alert-danger d-flex align-items-center" role="alert">
+                            <p className="h5">Oops!!! Please try again. {status}</p>
                         </div>
                     )
                 }
