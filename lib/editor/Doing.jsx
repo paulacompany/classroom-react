@@ -1,5 +1,5 @@
 import React from "react";
-import { doing } from "../public/resouces";
+import { doing } from "../../../lib/public/resouces";
 export default function Doing({ setDoing }) {
 
     function addDoing(item){

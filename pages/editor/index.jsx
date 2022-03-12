@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import Subject from "./components/Subject";
-import Doing from "./components/Doing";
-import Book from "./components/Book";
-import Date from "./components/Date";
-import Page from "./components/Page";
-import Des from "./components/Des";
-import Login from "./components/Login";
-import Submit from "./components/Submit";
-import View from "./components/View";
+import Subject from "../../lib/editor/Subject";
+import Doing from "../../lib/editor/Doing";
+import Book from "../../lib/editor/Book";
+import Date from "../../lib/editor/Date";
+import Page from "../../lib/editor/Page";
+import Des from "../../lib/editor/Des";
+import Login from "../../lib/editor/Login";
+import Submit from "../../lib/editor/Submit";
+import View from "../../lib/editor/View";
 import GOOGLE_SHEET_URL from "../../env/config"
 import moment from "moment";
 import { change, howManyDaysLeft } from "./public/change";
