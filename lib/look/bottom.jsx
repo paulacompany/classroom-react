@@ -3,7 +3,7 @@ import React from "react"
 export default function Bottom({ look, setAlert, setLook, iElstate, setIElstate }) {
 
     function lastDay() {
-        if (look >= -14) {
+        if (look > -14) {
             setLook(prop => {
                 prop--
                 return prop
@@ -55,7 +55,7 @@ export default function Bottom({ look, setAlert, setLook, iElstate, setIElstate 
     }
 
     return (
-        <div className="position-absolute bottom-0">
+        <div className="m-5 mx-0">
             <button className="btn btn-warning m-4" onClick={lastDay}>last day</button>
             <button className="btn btn-success m-4" onClick={nextDay}>next day</button>
             <button className="btn btn-primary m-4" onClick={today}>today</button>
