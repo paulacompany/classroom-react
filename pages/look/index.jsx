@@ -21,7 +21,7 @@ export default function Look() {
 
     function render(data, mode) {
 
-        let dateRender = data[0].year + '年' + data[0].month + '月' + data[0].dateToday + '日'
+        let dateRender = data[0].year + '年' + data[0].month + '月' + data[0].dateToday + '日' + '星期' + data[0].day 
 
         let contentRender = data.map((item, i) => {
             if (mode == 'user') {
