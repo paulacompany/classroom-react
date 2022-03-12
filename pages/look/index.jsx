@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import GOOGLE_SHEET_URL from "../../env/config"
-import Bottom from "./components/bottom";
-import del from "./components/delete";
+import Bottom from "../../lib/look/bottom";
+import del from "../../lib/look/delete";
 
 export default function Look() {
 
