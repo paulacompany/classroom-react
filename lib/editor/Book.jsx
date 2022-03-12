@@ -1,5 +1,5 @@
 import React from "react";
-import { book } from "../../../lib/public/resouces";
+import { book } from "../public/resouces";
 
 export default function Book({setBook}){
 

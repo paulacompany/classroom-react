@@ -1,5 +1,5 @@
 import React from "react";
-import { subject as subjectText } from "../../../lib/public/resouces";
+import { subject as subjectText } from "../public/resouces";
 
 export default function Subject({ setSubject, subject }) {
 

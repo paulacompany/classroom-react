@@ -10,7 +10,7 @@ import Submit from "../../lib/editor/Submit";
 import View from "../../lib/editor/View";
 import GOOGLE_SHEET_URL from "../../env/config"
 import moment from "moment";
-import { change, howManyDaysLeft } from "./public/change";
+import { change, howManyDaysLeft } from "../../lib/public/change";
 import { reactLocalStorage } from 'reactjs-localstorage';
 
 export default function Editor() {
