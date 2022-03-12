@@ -72,12 +72,14 @@ export default function Look() {
                         <p className="h5">Your password is wrong</p>
                     </div>
                 )
-            } else {
+            } else if(delState == 'wrong'){
                 setAlert(
                     <div className="alert alert-danger d-flex align-items-center m-4" role="alert">
                         <p className="h5">Wrong!!</p>
                     </div>
                 )
+            }else{
+                return
             }
             setTimeout(() => {
                 setAlert(<div></div>)
