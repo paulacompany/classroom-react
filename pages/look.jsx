@@ -30,13 +30,13 @@ export default function Look() {
         let contentRender = data.map((item, i) => {
             if (mode == 'user') {
                 if (item.del != 'Del') {
-                    return <li className="fs-4">{item.date + item.action + item.subject + item.book + item.pages + (item.des ? '(' + item.des + ')' : item.des)}</li>
+                    return <li className="fs-4">{item.date + item.action + item.subject + item.book + item.pages + (item.des ? ('(' + item.des + ')') : item.des)}</li>
                 }
             } else {
                 if (item.del != 'Del') {
-                    return <li className="fs-4">{item.date + item.action + item.subject + item.book + item.pages + (item.des ? '(' + item.des + ')' : item.des)}<i className={'bi bi-x-circle-fill mx-3 text-danger'} style={{ display: 'inline' }} onClick={() => { del(setDelState, i, look) }}></i></li>
+                    return <li className="fs-4">{item.date + item.action + item.subject + item.book + item.pages + (item.des ? ('(' + item.des + ')') : item.des)}<i className={'bi bi-x-circle-fill mx-3 text-danger'} style={{ display: 'inline' }} onClick={() => { del(setDelState, i, look) }}></i></li>
                 } else {
-                    return <li className="fs-4">{item.date + item.action + item.subject + item.book + item.pages + (item.des ? '(' + item.des + ')' : item.des)}<i className={'bi bi-check mx-3 bg-success text-white rounded'} style={{ display: 'inline' }} onClick={() => { rep(setRepState, i, look);}}></i></li>
+                    return <li className="fs-4">{item.date + item.action + item.subject + item.book + item.pages + (item.des ? ('(' + item.des + ')') : item.des)}<i className={'bi bi-check mx-3 bg-success text-white rounded'} style={{ display: 'inline' }} onClick={() => { rep(setRepState, i, look);}}></i></li>
 
                 }
             }
