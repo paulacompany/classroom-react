@@ -11,7 +11,7 @@ export default function About() {
                 <p className="h2 about-intro m-3">Learn more about this</p>
                 <button className="btn btn-secondary m-5 btn-lg">Continue</button>
             </div>
-            <div className="container-fluid p-3">
+            <div className="container-fluid p-3 bg-dark text-white">
                 <Author />
                 <Use />
             </div>

@@ -24,6 +24,9 @@ export default function nav() {
                         <li className="nav-item">
                             <Link href={'/about'}><a className="nav-link">About</a></Link>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="https://stin.to/vhgmg">Chat</a>
+                        </li>
                     </ul>
                 </div>
             </div>
