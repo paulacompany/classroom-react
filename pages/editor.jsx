@@ -8,7 +8,7 @@ import Des from "../components/editor/Des";
 import Login from "../components/editor/Login";
 import Submit from "../components/editor/Submit";
 import View from "../components/editor/View";
-import GOOGLE_SHEET_URL from "../env/config"
+import {GOOGLE_SHEET_URL} from "../env/config"
 import moment from "moment";
 import { change, howManyDaysLeft } from "../public/change";
 import { reactLocalStorage } from 'reactjs-localstorage';

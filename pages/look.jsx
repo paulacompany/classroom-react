@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import GOOGLE_SHEET_URL from "../env/config"
+import {GOOGLE_SHEET_URL} from "../env/config"
 import Bottom from "../components/look/bottom";
 import del from "../components/look/delete";
 import rep from "../components/look/rep";

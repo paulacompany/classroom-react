@@ -129,3 +129,85 @@ textarea{
 .item{
     list-style-type: decimal;
 }
+
+/* blog */
+
+.blog-container{
+    min-height: 100vh;
+}
+
+.post-container{
+    min-height: 100vh;
+}
+
+.body-area{
+    height: 20rem;
+}
+
+.preview-container{
+    white-space: pre-line;
+    min-height: 20rem;
+    word-break: break-all;
+}
+
+.preview-container h1, h2, h3, h4, h5, h6{
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.id-container p{
+    font-size: 20px;
+}
+
+.preview-container p{
+    font-size: 25px;
+}
+
+.blog-logo{
+    background-color: rgb(0, 0, 0);
+    width: 20rem;
+    max-height: 30rem;
+}
+
+.blog-logo:hover{
+    background-color: rgb(54, 54, 54);
+}
+
+.blog-logo img{
+    width: 1rem;
+}
+
+.img-container{
+    overflow: hidden;
+    height: 10rem;
+    
+}
+
+/* id */
+
+.id-container{
+    min-height: 100vh;
+}
+
+.id-container div{
+    white-space: pre-line;
+}
+
+.id-container div h1, h2, h3, h4, h5, h6{
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.id-container div code{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.id-container p{
+    font-size: 20px;
+    line-height: 40px;
+}
+
+
