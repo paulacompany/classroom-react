@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { BLOG_URL } from "../env/config";
 import { useRouter } from 'next/router'
 var markdown = require("markdown").markdown;
+const FormData = require('form-data');
 
 export default function Post() {
 
