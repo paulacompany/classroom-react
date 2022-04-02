@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react"
 import { BLOG_URL } from "../env/config";
 import { useRouter } from 'next/router'
-var markdown = require("markdown").markdown;
+import { marked as markdown } from 'marked';
 const FormData = require('form-data');
 
 export default function Post() {
@@ -73,7 +73,7 @@ export default function Post() {
                 <input type={"url"} className="form-control mb-5" onChange={e => setImg(e.target.value)} />
 
                 <label className="form-label h1 mb-2">body</label>
-                <textarea className="form-control mb-5 body-area" onChange={e => setBody(markdown.toHTML(e.target.value))}>
+                <textarea className="form-control mb-5 body-area" onChange={e => setBody(markdown.parse(e.target.value))}>
                 </textarea>
 
                 <label className="form-label h1 mb-2">password</label>
