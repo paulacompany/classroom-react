@@ -3,6 +3,22 @@ import { useRouter } from 'next/router'
 import { BLOG_URL } from "../../env/config"
 const FormData = require('form-data');
 
+
+function checkLoad(loadState) {
+    if (loadState) {
+        return
+    } else {
+        return (
+            <div className="d-flex justify-content-center">
+                <div className="spinner-border spinner-border-lg" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        )
+    }
+}
+
+
 export default function id() {
     const router = useRouter()
 
@@ -12,7 +28,7 @@ export default function id() {
 
     let [title, setTitle] = useState('');
     let [body, setBody] = useState('');
-    let [img, setImg] = useState('');
+    let [load, setLoad] = useState(false)
 
 
     useEffect(() => {
@@ -31,7 +47,7 @@ export default function id() {
         }).then(data => {
             setTitle(data.title)
             setBody(data.body)
-            setImg(data.img)
+            setLoad(true)
         })
 
     }, [router.isReady])
@@ -44,6 +60,7 @@ export default function id() {
     return (
         <div className="id-container container mt-5 mb-5">
             <h1 className="mb-5 nt-3 display-1">{title}</h1>
+            {checkLoad(load)}
             <div ref={bodyRef}></div>
         </div>
     )

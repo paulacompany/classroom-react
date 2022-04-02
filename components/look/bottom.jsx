@@ -10,7 +10,7 @@ export default function Bottom({ look, setAlert, setLook, iElstate, setIElstate 
             })
         } else {
             setAlert(
-                <div className="alert alert-danger d-flex align-items-center m-5" role="alert">
+                <div className="alert alert-danger d-flex align-items-center mx-0 m-4" role="alert">
                     <p className="h5">Wrong! This is the last day record. Please click "today" button.</p>
                 </div>
             )
@@ -31,7 +31,7 @@ export default function Bottom({ look, setAlert, setLook, iElstate, setIElstate 
 
         } else {
             setAlert(
-                <div className="alert alert-warning d-flex align-items-center m-5" role="alert">
+                <div className="alert alert-warning d-flex align-items-center mx-0 m-4" role="alert">
                     <p className="h5">Waring! This is the newest data.</p>
                 </div>
             )

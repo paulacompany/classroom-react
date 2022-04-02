@@ -20,7 +20,7 @@ export default function Setting() {
             reactLocalStorage.set('password', login)
             setAlert(
                 <div className="alert alert-success d-flex align-items-center" role="alert">
-                    <p className="h3">SUCCESS!!! It will be disappear few second later</p>
+                    <p className="h5">SUCCESS!!! It will be disappear few second later</p>
                 </div>
             )
         }else{
