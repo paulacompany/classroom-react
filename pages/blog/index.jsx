@@ -39,14 +39,14 @@ export default function Blog({ content }) {
                     content.map(item => {
                         item.img = item.img ? item.img : 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png'
                         return (
-                            <Link href={`/blog/${item.id.toString()}`}>
+                            <a href={`./blog/${item.id}`}>
                                 <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">
                                     <div className="img-container">
                                         <img src={item.img} className="w-100 rounded" />
                                     </div>
                                     <p className="fs-2 fw-bold text-center m-2 p-0 border-top border-light">{item.title}</p>
                                 </div>
-                            </Link>
+                            </a>
                         )
                     })
                 }
