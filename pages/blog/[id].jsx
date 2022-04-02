@@ -10,7 +10,7 @@ export default function id() {
 
     let FormBody = new FormData()
 
-    let [title, setTitle] = useState('wait');
+    let [title, setTitle] = useState('');
     let [body, setBody] = useState('');
     let [img, setImg] = useState('');
 
