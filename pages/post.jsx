@@ -67,13 +67,13 @@ export default function Post() {
             </div>
             <div className="container">
                 <label className="form-label h1 mb-2">title</label>
-                <input type={"text"} onPaste={() => {return true}} className="form-control mb-5" maxLength={30} onChange={e => setTitle(e.target.value)} />
+                <input type={"text"} className="form-control mb-5" maxLength={30} onChange={e => setTitle(e.target.value)} />
 
                 <label className="form-label h1 mb-2">image</label>
-                <input type={"url"} onPaste={() => {return true}} className="form-control mb-5" onChange={e => setImg(e.target.value)} />
+                <input type={"url"} className="form-control mb-5" onChange={e => setImg(e.target.value)} />
 
                 <label className="form-label h1 mb-2">body</label>
-                <textarea className="form-control mb-5 body-area" onPaste={() => {return true}} onChange={e => setBody(markdown.parse(e.target.value))}>
+                <textarea className="form-control mb-5 body-area" onChange={e => setBody(markdown.parse(e.target.value))}>
                 </textarea>
 
                 <label className="form-label h1 mb-2">password</label>
