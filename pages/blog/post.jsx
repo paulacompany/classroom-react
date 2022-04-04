@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react"
-import { BLOG_URL } from "../env/config";
+import { BLOG_URL, LOGIN } from "../../env/config";
 import { useRouter } from 'next/router'
 import { marked as markdown } from 'marked';
+import { reactLocalStorage } from 'reactjs-localstorage';
 const FormData = require('form-data');
 
 export default function Post() {
@@ -17,13 +18,26 @@ export default function Post() {
 
     let FormBody = new FormData();
 
+    function addToPersonSheet(id){
+        let email = reactLocalStorage.get('email')
+        let password = reactLocalStorage.get('emailpassword')
+        
+
+        fetch(`${LOGIN}?mode=whosepost&email=${email}&password=${password}&number=${id}`).then(res=>{
+            return res.text()
+        }).then(data=>{
+            console.log(data);
+        })
+
+    }
+
     function sendToBlogdataBase(){
 
         FormBody.append('title', title)
         FormBody.append('body', body)
-        FormBody.append('password', password)
+        FormBody.set('password', password)
         FormBody.append('img', img)
-        FormBody.append('mode', 'post')
+        FormBody.set('mode', 'post')
 
         fetch(BLOG_URL, {
             method: 'post',
@@ -31,11 +45,17 @@ export default function Post() {
         }).then(res=>{
             return res.text()
         }).then(data=>{
-            if(data == 'success'){
+            if(data != 'password error'){
+
+                if(reactLocalStorage.get('profile') == 'true' && reactLocalStorage.get('email')){
+                    addToPersonSheet(data)
+                }
                 router.push('/')
             }else{
                 alert('Save error! please try again.')
             }
+
+            
         })
 
     }
@@ -47,6 +67,17 @@ export default function Post() {
     useEffect(()=>{
         bodyPreview.current.innerHTML = body
     }, [body])
+
+    function checkProFileText(){
+        let email = reactLocalStorage.get('email')
+        if(reactLocalStorage.get('profile') == 'true' && email){
+            return `${email.replace('@gmail.com', '')} :`
+        }else{
+            return ''
+        }
+    }
+
+    console.log(title);
     
 
     return (
@@ -67,7 +98,7 @@ export default function Post() {
             </div>
             <div className="container">
                 <label className="form-label h1 mb-2">title</label>
-                <input type={"text"} className="form-control mb-5" maxLength={30} onChange={e => setTitle(e.target.value)} />
+                <input type={"text"} className="form-control mb-5" maxLength={30} onChange={e => setTitle(`${checkProFileText()}${e.target.value}`)} />
 
                 <label className="form-label h1 mb-2">image</label>
                 <input type={"url"} className="form-control mb-5" onChange={e => setImg(e.target.value)} />

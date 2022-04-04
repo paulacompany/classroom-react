@@ -45,6 +45,10 @@ export default function id() {
         }).then(res => {
             return res.json()
         }).then(data => {
+            if(data.title == ''){
+                data.title = 'Oops... Something wrong'
+                data.body = '<p class="m-5 text-center h1">404<p>'
+            }
             setTitle(data.title)
             setBody(data.body)
             setLoad(true)

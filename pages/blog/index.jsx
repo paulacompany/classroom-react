@@ -40,20 +40,24 @@ export default function Blog() {
         })
     }, [])
 
-
     return (
             <div className="blog-container">
                 <div className="d-flex flex-row justify-content-between align-items-center">
                     <h1 className="fw-bold display-1 mx-5 m-3">Blog</h1>
                     <div className="d-flex flex-row align-items-center">
                         <input type={'text'} className="form-control form-control-sm mx-3" placeholder="search" />
-                        <Link href={'/post'}><button className="btn btn-success mx-2">post</button></Link>
+                        <Link href={'/blog/post'}><button className="btn btn-success mx-2">post</button></Link>
                     </div>
                 </div>
                 <div className="container d-flex flex-row flex-wrap">
                     {
                         json.map(item => {
                             item.img = item.img ? item.img : 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png'
+
+                            if(!item.title){
+                                return
+                            }
+
                             return (
                                 <Link href={`./blog/article?id=${item.id}`}>
                                     <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">

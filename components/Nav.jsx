@@ -1,7 +1,18 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { reactLocalStorage } from 'reactjs-localstorage';
 
 export default function nav() {
+    
+
+    let [email, setEmail] = useState('');
+
+   
+
+    useEffect(() => {
+        let emailLocal = reactLocalStorage.get('email') ? reactLocalStorage.get('email') : ''
+        setEmail(emailLocal)
+    }, [])
 
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -25,10 +36,16 @@ export default function nav() {
                             <Link href={'/about'}><a className="nav-link">About</a></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="https://stin.to/vhgmg">Chat</a>
+                            <Link href={'/blog'}><a className="nav-link">Blog</a></Link>
                         </li>
                         <li className="nav-item">
-                        <Link href={'/blog'}><a className="nav-link">Blog</a></Link>
+                            <Link href={'/profile'}><a className="nav-link">Profile</a></Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href={'/login'}><a className="nav-link">Login</a></Link>
+                        </li>
+                        <li className="nav-item d-flex align-items-center">
+                            <span className="badge bg-danger">{email}</span>
                         </li>
                     </ul>
                 </div>

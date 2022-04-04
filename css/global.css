@@ -197,7 +197,7 @@ textarea{
     
 }
 
-/* id */
+/* id or article */
 
 .id-container{
     min-height: 100vh;
@@ -234,4 +234,16 @@ textarea{
     padding: 1rem;
 }
 
+/* login */
+
+.login-container{
+    min-height: 100vh;
+}
+
+
+/* profile */
+
+.profile-container{
+    min-height: 100vh;
+}
 
