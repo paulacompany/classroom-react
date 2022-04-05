@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import Ckeckload from "../components/Checkload";
 import Content from "../components/blog/Content";
-import { reactLocalStorage } from 'reactjs-localstorage';
 import { useRouter } from "next/router";
 import { BLOG_URL, LOGIN } from "../env/config";
 import getUser from "../public/getUser";
+import setEmailAndPassword from "../public/setEmailAndPassword";
 const FormData = require('form-data');
 
 export default function Profile() {
@@ -20,7 +20,7 @@ export default function Profile() {
 
         function turnToOn() {
             if(email){
-                reactLocalStorage.set('profile', 'true')
+                setEmailAndPassword(false, false, 'true')
                 route.push('/')
             }else{
                 alert('You have to login')
@@ -28,7 +28,7 @@ export default function Profile() {
             }     
         }
         function turnToOff() {
-            reactLocalStorage.set('profile', 'false')
+            setEmailAndPassword(false, false, 'false')
             route.push('/')
         }
 

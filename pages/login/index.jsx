@@ -28,7 +28,7 @@ export default function Login() {
     }
 
     function logOut(){
-        setEmailAndPassword('', '')
+        setEmailAndPassword('', '', 'false')
         router.reload()
     }
 
