@@ -70,6 +70,15 @@ export default function Post() {
         getUser(setEmail, setEmailPassword, setProfile)
     }, [])
 
+    function bodyChange(e){
+        if(profile == 'true'){
+            setBody(markdown.parse(`${email}的文章\n${e.target.value}`))
+        }else{
+            setBody(markdown.parse(e.target.value))
+        }
+        
+    }
+
 
     return (
         <div className="post-container mb-5 mt-2">
@@ -95,7 +104,7 @@ export default function Post() {
                 <input type={"url"} className="form-control mb-5" onChange={e => setImg(e.target.value)} />
 
                 <label className="form-label h1 mb-2">body</label>
-                <textarea className="form-control mb-5 body-area" onChange={e => setBody(markdown.parse(`${email}的文章\n${e.target.value}`))}>
+                <textarea className="form-control mb-5 body-area" onChange={bodyChange}>
                 </textarea>
 
                 <label className="form-label h1 mb-2">password</label>
