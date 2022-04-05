@@ -18,7 +18,7 @@ export default function Login() {
             if(data == 'password error'){
                 alert(data)
             }else if(data == 'ok'){
-                setEmailAndPassword(email, emailPassword)
+                setEmailAndPassword(email, emailPassword, 'false')
                 router.reload()
                 
             }else{
