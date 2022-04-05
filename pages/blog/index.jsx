@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import Content from "../../components/blog/Content";
 import Link from "next/link"
 import { BLOG_URL } from "../../env/config"
 const FormData = require('form-data');
@@ -49,28 +50,7 @@ export default function Blog() {
                         <Link href={'/blog/post'}><button className="btn btn-success mx-2">post</button></Link>
                     </div>
                 </div>
-                <div className="container d-flex flex-row flex-wrap">
-                    {
-                        json.map(item => {
-                            item.img = item.img ? item.img : 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png'
-
-                            if(!item.title){
-                                return
-                            }
-
-                            return (
-                                <Link href={`./blog/article?id=${item.id}`}>
-                                    <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">
-                                        <div className="img-container">
-                                            <img src={item.img} className="w-100 rounded" />
-                                        </div>
-                                        <p className="fs-2 fw-bold text-center m-2 p-0 border-top border-light">{item.title}</p>
-                                    </div>
-                                </Link>
-                            )
-                        })
-                    }
-                </div>
+                <Content json={json} />
                 {checkLoad(load)}
             </div>
     )

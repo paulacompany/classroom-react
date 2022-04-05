@@ -7,13 +7,11 @@ export default function nav() {
 
     let [email, setEmail] = useState('');
 
-   
-
     useEffect(() => {
         let emailLocal = reactLocalStorage.get('email') ? reactLocalStorage.get('email') : ''
         setEmail(emailLocal)
     }, [])
-
+    
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
             <div className="container-fluid">
@@ -31,9 +29,6 @@ export default function nav() {
                         </li>
                         <li className="nav-item">
                             <Link href={'/setting'}><a className="nav-link">Setting</a></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link href={'/about'}><a className="nav-link">About</a></Link>
                         </li>
                         <li className="nav-item">
                             <Link href={'/blog'}><a className="nav-link">Blog</a></Link>

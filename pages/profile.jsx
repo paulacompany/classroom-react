@@ -1,55 +1,38 @@
 import React, { useState, useEffect } from "react"
+import Ckeckload from "../components/Checkload";
+import Content from "../components/blog/Content";
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { useRouter } from "next/router";
 import { BLOG_URL, LOGIN } from "../env/config";
-import Link from "next/link";
+import getUser from "../public/getUser";
 const FormData = require('form-data');
 
 export default function Profile() {
 
     let route = useRouter()
 
-    let [isProFile, setIsProFile] = useState('false')
+    let [proFile, setProFile] = useState('')
     let [result, setResult] = useState([])
     let [loadState, setLoadState] = useState(false)
-
-
-    function checkLoad(loadState) {
-        if (loadState) {
-            return
-        } else {
-            return (
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border spinner-border-lg" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            )
-        }
-    }
-
-    useEffect(() => {
-        let isProFileInComputer = reactLocalStorage.get('profile') ? reactLocalStorage.get('profile') : 'false'
-        setIsProFile(isProFileInComputer)
-    }, [])
-
+    let [email, setEmail] = useState('')
 
     function checkIsProFile() {
 
-
         function turnToOn() {
-            reactLocalStorage.set('profile', 'true')
-            route.push('/')
+            if(email){
+                reactLocalStorage.set('profile', 'true')
+                route.push('/')
+            }else{
+                alert('You have to login')
+                route.push('/')
+            }     
         }
-
         function turnToOff() {
             reactLocalStorage.set('profile', 'false')
             route.push('/')
         }
 
-
-
-        if (isProFile == 'true') {
+        if (proFile == 'true') {
             return (
                 <button className="btn btn-danger" onClick={turnToOff}>On</button>
             )
@@ -61,17 +44,38 @@ export default function Profile() {
     }
 
     useEffect(() => {
+        getUser(setEmail, false, setProFile)
+
+     
+
+
+        return () => {
+            setResult([])
+        }
+
+    }, [])
+
+
+    useEffect(()=>{
+
         let FormBody = new FormData()
 
-        let email = reactLocalStorage.get('email')
-        let profile = reactLocalStorage.get('profile')
-
-        if(profile == 'false'){
+        if(proFile == 'false'){
             setLoadState(true)
         }
 
-        function getPost(number) {
+        if (proFile == 'true') {
+            fetch(`${LOGIN}?mode=getpersonpost&email=${email}`).then(res => {
+                return res.text()
+            }).then(data => {
+                data = data.replace(', ', '')
+                getPost(JSON.parse("[" + data + "]"))
+            })
+        } else {
+            return
+        }
 
+        function getPost(number) {
 
             number.map(item => {
 
@@ -90,65 +94,27 @@ export default function Profile() {
                             data
                         ]
                     })
-
                 })
+
             })
+
             setLoadState(true)
 
         }
 
-        if (profile == 'true') {
-            fetch(`${LOGIN}?mode=getpersonpost&email=${email}`).then(res => {
-                return res.text()
-            }).then(data => {
-                data = data.replace(', ', '')
-                getPost(JSON.parse("[" + data + "]"))
-            })
-        } else {
-            return
-        }
+        
 
-        return () => {
-            setResult([])
-        }
-
-    }, [])
-
-
-    useEffect(() => {
-        console.log(result);
-    }, [result])
+    }, [proFile])
 
     return (
         <div className="profile-container container">
-            <h1 className="m-5">Profile</h1>
+            <h1 className="m-5">Profile: {email}</h1>
             <div className="d-flex flex-row align-items-center">
                 <p className="h4 m-4">Profile mode:</p>
                 {checkIsProFile()}
             </div>
-            <div className="container d-flex flex-row flex-wrap">
-                {
-                    result.map(item => {
-                        item.img = item.img ? item.img : 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png'
-
-                        if (!item.title) {
-                            return
-                        }
-
-                        return (
-                            <Link href={`./blog/article?id=${item.id}`}>
-                                <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">
-                                    <div className="img-container">
-                                        <img src={item.img} className="w-100 rounded" />
-                                    </div>
-                                    <p className="fs-2 fw-bold text-center m-2 p-0 border-top border-light">{item.title}</p>
-                                </div>
-                            </Link>
-                        )
-                    })
-                }
-            </div>
-            {checkLoad(loadState)}
+            <Content json={result} />
+            <Ckeckload loadState={loadState} />
         </div>
     )
 }

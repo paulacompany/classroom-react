@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { BLOG_URL, LOGIN } from "../../env/config";
 import { useRouter } from 'next/router'
 import { marked as markdown } from 'marked';
-import { reactLocalStorage } from 'reactjs-localstorage';
+import getUser from "../../public/getUser";
 const FormData = require('form-data');
 
 export default function Post() {
@@ -12,26 +12,27 @@ export default function Post() {
     let [title, setTitle] = useState('');
     let [body, setBody] = useState('');
     let [password, setPassword] = useState('');
+    let [email, setEmail] = useState('')
+    let [emailPassword, setEmailPassword] = useState('')
+    let [profile, setProfile] = useState('')
     let [img, setImg] = useState('');
 
     let bodyPreview = useRef();
 
     let FormBody = new FormData();
 
-    function addToPersonSheet(id){
-        let email = reactLocalStorage.get('email')
-        let password = reactLocalStorage.get('emailpassword')
-        
 
-        fetch(`${LOGIN}?mode=whosepost&email=${email}&password=${password}&number=${id}`).then(res=>{
+    function addToPersonSheet(id) {
+
+        fetch(`${LOGIN}?mode=whosepost&email=${email}&password=${emailPassword}&number=${id}`).then(res => {
             return res.text()
-        }).then(data=>{
+        }).then(data => {
             console.log(data);
         })
 
     }
 
-    function sendToBlogdataBase(){
+    function sendToBlogdataBase() {
 
         FormBody.append('title', title)
         FormBody.append('body', body)
@@ -42,43 +43,33 @@ export default function Post() {
         fetch(BLOG_URL, {
             method: 'post',
             body: FormBody
-        }).then(res=>{
+        }).then(res => {
             return res.text()
-        }).then(data=>{
-            if(data != 'password error'){
-
-                if(reactLocalStorage.get('profile') == 'true' && reactLocalStorage.get('email')){
+        }).then(data => {
+            if (data != 'password error') {
+                if (profile && email) {
                     addToPersonSheet(data)
                 }
                 router.push('/')
-            }else{
+            } else {
                 alert('Save error! please try again.')
             }
-
-            
         })
 
     }
 
-    function passwordButtonClick(){
+    function passwordButtonClick() {
         alert(`Your password is : \n${password}`)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         bodyPreview.current.innerHTML = body
     }, [body])
 
-    function checkProFileText(){
-        let email = reactLocalStorage.get('email')
-        if(reactLocalStorage.get('profile') == 'true' && email){
-            return `${email.replace('@gmail.com', '')} :`
-        }else{
-            return ''
-        }
-    }
+    useEffect(() => {
+        getUser(setEmail, setEmailPassword, setProfile)
+    }, [])
 
-    console.log(title);
-    
 
     return (
         <div className="post-container mb-5 mt-2">
@@ -98,13 +89,13 @@ export default function Post() {
             </div>
             <div className="container">
                 <label className="form-label h1 mb-2">title</label>
-                <input type={"text"} className="form-control mb-5" maxLength={30} onChange={e => setTitle(`${checkProFileText()}${e.target.value}`)} />
+                <input type={"text"} className="form-control mb-5" maxLength={30} onChange={e => setTitle(e.target.value)} />
 
                 <label className="form-label h1 mb-2">image</label>
                 <input type={"url"} className="form-control mb-5" onChange={e => setImg(e.target.value)} />
 
                 <label className="form-label h1 mb-2">body</label>
-                <textarea className="form-control mb-5 body-area" onChange={e => setBody(markdown.parse(e.target.value))}>
+                <textarea className="form-control mb-5 body-area" onChange={e => setBody(markdown.parse(`${email}的文章\n${e.target.value}`))}>
                 </textarea>
 
                 <label className="form-label h1 mb-2">password</label>

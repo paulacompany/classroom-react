@@ -15,7 +15,6 @@ import { reactLocalStorage } from 'reactjs-localstorage';
 
 export default function Editor() {
 
-
     let [passwordFromUser, setPasswordFromUser] = useState('');
 
     useEffect(()=>{

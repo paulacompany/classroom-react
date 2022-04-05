@@ -1,22 +1,9 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useRouter } from 'next/router'
 import { BLOG_URL } from "../../env/config"
+import Ckeckload from "../../components/Checkload";
 const FormData = require('form-data');
 
-
-function checkLoad(loadState) {
-    if (loadState) {
-        return
-    } else {
-        return (
-            <div className="d-flex justify-content-center">
-                <div className="spinner-border spinner-border-lg" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        )
-    }
-}
 
 
 export default function id() {
@@ -64,7 +51,7 @@ export default function id() {
     return (
         <div className="id-container container mt-5 mb-5">
             <h1 className="mb-5 nt-3 display-1">{title}</h1>
-            {checkLoad(load)}
+            <Ckeckload loadState={load} />
             <div ref={bodyRef}></div>
         </div>
     )
