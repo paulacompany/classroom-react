@@ -11,6 +11,22 @@ export default function Profile() {
 
     let [isProFile, setIsProFile] = useState('false')
     let [result, setResult] = useState([])
+    let [loadState, setLoadState] = useState(false)
+
+
+    function checkLoad(loadState) {
+        if (loadState) {
+            return
+        } else {
+            return (
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border spinner-border-lg" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )
+        }
+    }
 
     useEffect(() => {
         let isProFileInComputer = reactLocalStorage.get('profile') ? reactLocalStorage.get('profile') : 'false'
@@ -21,12 +37,12 @@ export default function Profile() {
     function checkIsProFile() {
 
 
-        function turnToOn(){
+        function turnToOn() {
             reactLocalStorage.set('profile', 'true')
             route.push('/')
         }
 
-        function turnToOff(){
+        function turnToOff() {
             reactLocalStorage.set('profile', 'false')
             route.push('/')
         }
@@ -44,18 +60,20 @@ export default function Profile() {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         let FormBody = new FormData()
 
         let email = reactLocalStorage.get('email')
         let profile = reactLocalStorage.get('profile')
 
-        function getPost(number){
+        if(profile == 'false'){
+            setLoadState(true)
+        }
 
-            
-            
+        function getPost(number) {
 
-            number.map(item=>{
+
+            number.map(item => {
 
                 FormBody.append('mode', 'get')
                 FormBody.set('sheetid', item)
@@ -63,44 +81,41 @@ export default function Profile() {
                 fetch(BLOG_URL, {
                     method: 'post',
                     body: FormBody
-                }).then(res=>{
+                }).then(res => {
                     return res.json()
-                }).then(data=>{
+                }).then(data => {
                     setResult(prop => {
                         return [
                             ...prop,
                             data
                         ]
                     })
-                    
+
                 })
             })
+            setLoadState(true)
 
         }
 
-        
-
-
-        if(profile == 'true'){
-            fetch(`${LOGIN}?mode=getpersonpost&email=${email}`).then(res=>{
+        if (profile == 'true') {
+            fetch(`${LOGIN}?mode=getpersonpost&email=${email}`).then(res => {
                 return res.text()
-            }).then(data=>{
+            }).then(data => {
                 data = data.replace(', ', '')
-
                 getPost(JSON.parse("[" + data + "]"))
             })
-        }else{
+        } else {
             return
         }
 
-        return ()=>{
+        return () => {
             setResult([])
         }
 
     }, [])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(result);
     }, [result])
 
@@ -112,27 +127,28 @@ export default function Profile() {
                 {checkIsProFile()}
             </div>
             <div className="container d-flex flex-row flex-wrap">
-                    {
-                        result.map(item => {
-                            item.img = item.img ? item.img : 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png'
+                {
+                    result.map(item => {
+                        item.img = item.img ? item.img : 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png'
 
-                            if(!item.title){
-                                return
-                            }
-                            
-                            return (
-                                <Link href={`./blog/article?id=${item.id}`}>
-                                    <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">
-                                        <div className="img-container">
-                                            <img src={item.img} className="w-100 rounded" />
-                                        </div>
-                                        <p className="fs-2 fw-bold text-center m-2 p-0 border-top border-light">{item.title}</p>
+                        if (!item.title) {
+                            return
+                        }
+
+                        return (
+                            <Link href={`./blog/article?id=${item.id}`}>
+                                <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">
+                                    <div className="img-container">
+                                        <img src={item.img} className="w-100 rounded" />
                                     </div>
-                                </Link>
-                            )
-                        })
-                    }
-                </div>
+                                    <p className="fs-2 fw-bold text-center m-2 p-0 border-top border-light">{item.title}</p>
+                                </div>
+                            </Link>
+                        )
+                    })
+                }
+            </div>
+            {checkLoad(loadState)}
         </div>
     )
 }
