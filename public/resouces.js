@@ -1,4 +1,4 @@
-const subject = [
+const subjectText = [
     "國文",
     "數學",
     "英文",
@@ -22,7 +22,7 @@ const subject = [
     "札記"
 ]
 
-const doing = [
+const doingText = [
     "考",
     "交",
     "帶",
@@ -34,7 +34,7 @@ const doing = [
     "登記"
 ]
 
-const book = [
+const bookText = [
     "課本",
     "習作",
     "大講",
@@ -43,4 +43,4 @@ const book = [
     "考卷"
 ]
 
-export { subject, doing, book }
+export { subjectText, doingText, bookText }

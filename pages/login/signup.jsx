@@ -11,7 +11,6 @@ export default function Signup() {
     let [password, setPassword] = useState('')
     let [checkItem, setCheckItem] = useState(false);
     let [checkNumber, setCheckNumber] = useState();
-    let [clickEnter, setClickEnter] = useState(false)
 
     function click() {
         fetch(`${LOGIN}?email=${email}&password=${password}&mode=sign`).then(res => {
@@ -19,10 +18,6 @@ export default function Signup() {
         }).then(data => {
             if (data == 'success') {
                 setCheckItem(true)
-        
-                    
-                
-                
             } else {
                 alert('error')
             }
@@ -33,7 +28,7 @@ export default function Signup() {
         if (checkItem) {
             return (
                 <>
-                    <p className="h3 m-2 mt-5">conform code:</p>
+                    <p className="h3 m-2 mt-5">conform code (Please press enter):</p>
                     <input className="form-control mb-5" type={'number'} onKeyUp={e => {
                         setCheckNumber(e.target.value)
                         if(e.key == 'Enter'){
