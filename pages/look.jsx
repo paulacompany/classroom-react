@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from "react"
-import { GOOGLE_SHEET_URL } from "../../env/config"
-import { getTitle, loadItem } from "./function.js"
-import { alertCallback } from "../../components/commons/function.js";
+import { GOOGLE_SHEET_URL } from "../env/config"
+import { getTitle, loadItem } from "../components/look-page/function.js"
+import { alertCallback } from "../components/commons/function.js";
 import { reactLocalStorage } from "reactjs-localstorage";
-import Bottom from "./Button.jsx";
+import Bottom from "../components/look-page/Button.jsx";
 
 export default function Look() {
 

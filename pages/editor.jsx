@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { tify } from "chinese-conv";
-import { subjectText, doingText, bookText } from "../../public/resouces.js";
-import { alertCallback } from "../../components/commons/function.js";
+import { subjectText, doingText, bookText } from "../public/resouces.js";
+import { alertCallback } from "../components/commons/function.js";
 
 import {
     addSubject,
@@ -10,7 +10,7 @@ import {
     addBook,
     getTheFormatDate,
     sendDataToDataBase
-} from "./function.js";
+} from "../components/editor-page/function.js";
 
 export default function Editor() {
 
