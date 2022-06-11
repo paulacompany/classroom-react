@@ -10,10 +10,7 @@ export default function Content({ json }) {
                 json.map(item => {
                     item.img = item.img ? item.img : defaultImage
 
-                    if (!item.title) {
-                        return
-                    }
-
+                    if (!item.title) return
                     return (
                         <Link href={`./blog/article?id=${item.id}`}>
                             <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">

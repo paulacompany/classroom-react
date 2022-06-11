@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { BLOG_URL, LOGIN } from "../../env/config";
 import { useRouter } from 'next/router'
 import { marked as markdown } from 'marked';
-import getUser from "../../public/getUser";
+import getUser from "../../common/getUser";
 const FormData = require('form-data');
 
 export default function Post() {
@@ -90,9 +90,6 @@ export default function Post() {
                     </li>
                     <li className="list-group-item">
                         <p className="m-0">Write the clearly post.</p>
-                    </li>
-                    <li className="list-group-item">
-                        <p className="m-0">Cannot use the "table" in the post.</p>
                     </li>
                 </ul>
             </div>

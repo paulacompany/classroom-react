@@ -1,5 +1,5 @@
 import moment from "moment";
-import { change, howManyDaysLeft } from "../../public/change";
+import { change, howManyDaysLeft } from "../../common/change";
 import { GOOGLE_SHEET_URL } from "../../env/config"
 
 const todayYear = moment().format('YYYY')

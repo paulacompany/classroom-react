@@ -1,4 +1,4 @@
-import { change } from "../../public/change";
+import { change } from "../../common/change";
 import { GOOGLE_SHEET_URL } from "../../env/config.js";
 
 export function getTitle(item) {
