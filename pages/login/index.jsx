@@ -31,7 +31,7 @@ export default function Login() {
 
     return (
         <div className="mh-100 login-container d-flex flex-column justify-content-center align-items-center w-100">
-            <div className="bg-light rounded p-3 w-25">
+            <div className="bg-light rounded p-3 login-content-container">
                 <h3 className="mb-5 mt-5 mx-3">Login</h3>
                 <p className="h3 m-2">email:</p>
                 <input type={'email'} className="form-control mb-5" onChange={e => { setEmail(e.target.value) }} />

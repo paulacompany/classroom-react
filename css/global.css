@@ -292,6 +292,10 @@ textarea {
     min-height: 100vh;
 }
 
+.login-content-container{
+    min-width: 20rem;
+}
+
 
 /* profile */
 
