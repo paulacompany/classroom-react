@@ -19,7 +19,7 @@ export default function Profile() {
 
     function checkIsProFile() {
 
-        function turnToOn() {
+        function turnToOff() {
             if (email) {
                 setEmailAndPassword(false, false, 'true')
                 route.push('/')
@@ -28,18 +28,18 @@ export default function Profile() {
                 route.push('/')
             }
         }
-        function turnToOff() {
+        function turnToOn() {
             setEmailAndPassword(false, false, 'false')
             route.push('/')
         }
 
         if (proFile == 'true') {
             return (
-                <button className="btn btn-danger" onClick={turnToOff}>On</button>
+                <button className="btn btn-danger" onClick={turnToOn}>Off</button>
             )
         } else {
             return (
-                <button className="btn btn-primary" onClick={turnToOn} >Off</button>
+                <button className="btn-primary btn" onClick={turnToOff}>On</button>
             )
         }
     }
@@ -97,7 +97,7 @@ export default function Profile() {
         <div className="profile-container container">
             <h1 className="m-5">Profile: </h1>
             <div className="d-flex flex-row align-items-center">
-                <p className="h4 m-4">Profile mode:</p>
+                <p className="h4 m-4">Anonymous mode:</p>
                 {checkIsProFile()}
             </div>
             {resultState ? <Content json={result} /> : ''}
