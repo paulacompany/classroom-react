@@ -1,23 +1,44 @@
 import React from "react"
 import Link from "next/link"
-export default function Content({ json }) {
+import { compile } from "html-to-text"
+export default function Content({ json, state }) {
 
-    let defaultImage = 'https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png'
-
+    let defaultImage = '/img/gray.png'
+    let convert = compile({
+        ignoreHref: true,
+        wordwrap: 500
+    })
     return (
         <div className="container d-flex flex-row flex-wrap">
             {
                 json.map(item => {
-                    item.img = item.img ? item.img : defaultImage
+                    let itemId, itemTitle, itemImg, itemBody;
 
-                    if (!item.title) return
+                    if (state) {
+                        itemImg = item.item.img
+                        itemTitle = item.item.title
+                        itemId = item.item.id
+                        itemBody = item.item.body
+                    } else {
+                        itemImg = item.img
+                        itemTitle = item.title
+                        itemId = item.id
+                        itemBody = item.body
+                    }
+
+                    itemImg = itemImg ? itemImg : defaultImage
+
+                    if (!itemTitle) return
                     return (
-                        <Link href={`./blog/article?id=${item.id}`}>
-                            <div className="blog-logo rounded text-white p-1 m-5 d-flex flex-column align-items-center">
+                        <Link href={`./blog/article?id=${itemId}`}>
+                            <div className="blog-logo m-5 d-flex flex-column justify-content-between">
                                 <div className="img-container">
-                                    <img src={item.img} className="w-100 rounded" />
+                                    <img src={itemImg} className="w-100 text-center" />
                                 </div>
-                                <p className="fs-2 fw-bold text-center m-2 p-0 border-top border-light">{item.title}</p>
+                                <p className="fs-2 fw-bold m-2 p-0">{itemTitle}</p>
+                                <div className="blog-body-preview">
+                                    {convert(itemBody)}
+                                </div>
                             </div>
                         </Link>
                     )
