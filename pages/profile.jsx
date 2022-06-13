@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react"
 import Ckeckload from "../components/Checkload";
 import Content from "../components/blog/Content";
+import UserSetting from "../components/profile/userSetting";
 import { useRouter } from "next/router";
 import { BLOG_URL, LOGIN } from "../env/config";
 import getUser from "../common/getUser";
 import setEmailAndPassword from "../common/setEmailAndPassword";
+import MyProfile from "../components/profile/myProfile";
 const FormData = require('form-data');
 
 export default function Profile() {
@@ -16,6 +18,7 @@ export default function Profile() {
     let [result, setResult] = useState([])
     let [loadState, setLoadState] = useState(false)
     let [email, setEmail] = useState('')
+    let [password, setPassword] = useState('')
 
     function checkIsProFile() {
 
@@ -45,7 +48,7 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        getUser(setEmail, false, setProFile)
+        getUser(setEmail, setPassword, setProFile)
         return () => {
             setResult([])
         }
@@ -73,7 +76,7 @@ export default function Profile() {
 
         function getPost(number) {
 
-            number.map(async (item, index) => {
+            number.map(async item => {
 
                 FormBody.append('mode', 'get')
                 FormBody.set('sheetid', item)
@@ -95,13 +98,17 @@ export default function Profile() {
 
     return (
         <div className="profile-container container">
-            <h1 className="m-5">Profile: </h1>
+            <h1 className="m-5">Profile</h1>
             <div className="d-flex flex-row align-items-center">
                 <p className="h4 m-4">Anonymous mode:</p>
                 {checkIsProFile()}
             </div>
-            {resultState ? <Content json={result} /> : ''}
             <Ckeckload loadState={loadState} />
+            <div className="d-flex flex-wrap justify-content-between m-2">
+                {resultState ? <MyProfile email={email} json={result} /> : ''}
+                {resultState ? <UserSetting email={email} password={password} /> : ''}
+            </div>
+            {resultState ? <Content json={result} /> : ''}
         </div>
     )
 }

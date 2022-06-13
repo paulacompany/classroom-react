@@ -16,6 +16,7 @@ export default function Post() {
     let [emailPassword, setEmailPassword] = useState('')
     let [profile, setProfile] = useState('')
     let [img, setImg] = useState('');
+    let clickState = useRef(false)
 
     let bodyPreview = useRef();
 
@@ -33,6 +34,9 @@ export default function Post() {
     }
 
     function sendToBlogdataBase() {
+
+        if(clickState.current) return
+        clickState.current = true
 
         FormBody.append('title', title)
         FormBody.append('body', body)
