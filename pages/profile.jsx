@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Ckeckload from "../components/Checkload";
 import Content from "../components/blog/Content";
 import UserSetting from "../components/profile/userSetting";
@@ -19,6 +19,7 @@ export default function Profile() {
     let [loadState, setLoadState] = useState(false)
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
+    let userMode = useRef(false)
 
     function checkIsProFile() {
 
@@ -48,7 +49,19 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        getUser(setEmail, setPassword, setProFile)
+
+        let url = new URL(location.href)
+        let params = url.searchParams;
+
+        if(params.has('email')){
+            setEmail(params.get('email'))
+            getUser(false, setPassword, setProFile)
+            userMode.current = true
+        }else{
+            getUser(setEmail, setPassword, setProFile)
+        }
+
+
         return () => {
             setResult([])
         }
@@ -100,13 +113,13 @@ export default function Profile() {
         <div className="profile-container container">
             <h1 className="m-5">Profile</h1>
             <div className="d-flex flex-row align-items-center">
-                <p className="h4 m-4">Anonymous mode:</p>
-                {checkIsProFile()}
+                {!userMode.current ? <p className="h4 m-4">Anonymous mode:</p> : ''}
+                {!userMode.current ? checkIsProFile() : ''}
             </div>
             <Ckeckload loadState={loadState} />
             <div className="d-flex flex-wrap justify-content-between m-2">
                 {resultState ? <MyProfile email={email} json={result} /> : ''}
-                {resultState ? <UserSetting email={email} password={password} /> : ''}
+                {resultState && !userMode.current ? <UserSetting email={email} password={password} /> : ''}
             </div>
             {resultState ? <Content json={result} /> : ''}
         </div>

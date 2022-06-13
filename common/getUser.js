@@ -6,7 +6,7 @@ export default function getUser(setEmail, setEmailPassword, setProfile){
     let emailPassword = reactLocalStorage.get('emailpassword')
     let profile = reactLocalStorage.get('profile')
 
-    setEmail(email)
+    if(setEmail) setEmail(email)
     if(setEmailPassword) setEmailPassword(emailPassword)
     if(setProfile) setProfile(profile)
 
