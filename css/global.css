@@ -218,6 +218,11 @@ textarea {
     }
 }
 
+.userimg{
+    max-height: 10rem;
+    max-width: 10rem;
+}
+
 .blog-logo:hover {
     animation-duration: 0.5s;
     animation-name: changeColor;
@@ -235,12 +240,22 @@ textarea {
 }
 
 .blog-logo img {
-   width: 100%;
+   width: 20rem;
 }
 
 .img-container {
     overflow: hidden;
     height: 10rem;
+}
+
+@media screen and (max-width: 400px) {
+    .blog-logo{
+        width: 15rem;
+    }
+
+    .blog-logo img {
+        width: 15rem;
+    }
 }
 
 /* id or article */

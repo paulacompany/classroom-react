@@ -53,11 +53,11 @@ export default function Profile() {
         let url = new URL(location.href)
         let params = url.searchParams;
 
-        if(params.has('email')){
+        if (params.has('email')) {
             setEmail(params.get('email'))
             getUser(false, setPassword, setProFile)
             userMode.current = true
-        }else{
+        } else {
             getUser(setEmail, setPassword, setProFile)
         }
 

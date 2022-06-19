@@ -33,10 +33,10 @@ export default function Content({ json, state }) {
                         <Link href={`./blog/article?id=${itemId}`}>
                             <div className="blog-logo m-5 d-flex flex-column justify-content-between">
                                 <div className="img-container">
-                                    <img src={itemImg} className="w-100 text-center" />
+                                    <img src={itemImg} className="text-center" />
                                 </div>
                                 <p className="fs-2 fw-bold m-2 p-0">{itemTitle}</p>
-                                <div className="blog-body-preview">
+                                <div className="blog-body-preview w-100">
                                     {convert(itemBody)}
                                 </div>
                             </div>

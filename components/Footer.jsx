@@ -1,7 +1,13 @@
-import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import count from "../common/count.js";
 
 export default function Footer() {
+
+    let [countValue, setCountValue] = useState(0);
+    
+    useEffect(() => {
+        count(setCountValue)
+    }, [])
 
     return (
         <footer className="bg-dark d-flex justify-content-center align-items-center flex-column">
@@ -18,7 +24,10 @@ export default function Footer() {
                 <a className="h5 mx-2 text-white">Server</a>
                 <a className="h5 mx-2 text-white">Technology</a>
             </div>
-            <div className="text-secondary m-3">
+            <div className="text-secondary m-1">
+                <p>{countValue} people visit</p>
+            </div>
+            <div className="text-secondary m-1">
                 <p className="h6">MIT Classroom ©</p>
             </div>
         </footer>

@@ -38,8 +38,8 @@ export default function Button({look, setLook, isDel, setIsDel, alert, setAlert}
 
     return(
         <div className="m-5 mx-0">
-            <button className="btn btn-warning m-4" onClick={lastDay}>last day</button>
-            <button className="btn btn-success m-4" onClick={nextDay}>next day</button>
+            <button className="btn btn-warning m-4" onClick={lastDay}>back</button>
+            <button className="btn btn-success m-4" onClick={nextDay}>next</button>
             <button className="btn btn-primary m-4" onClick={today}>today</button>
             <button className="btn btn-danger m-4" onClick={del}>delete</button>
         </div>
