@@ -337,3 +337,18 @@ textarea {
 .profile-container {
     min-height: 100vh;
 }
+
+
+/* test */
+
+.test-container{
+    height: 100vh;
+}
+
+.describe{
+    height: 10rem!important;
+}
+
+.test-preview-img{
+    width: 60%;
+}

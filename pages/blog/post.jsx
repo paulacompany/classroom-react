@@ -76,7 +76,7 @@ export default function Post() {
 
     function bodyChange(e){
         if(profile == 'true'){
-            setBody(markdown.parse(`${email}的文章\n${e.target.value}`))
+            setBody(markdown.parse(`[${email}](/profile?email=${email})的文章\n${e.target.value}`))
         }else{
             setBody(markdown.parse(e.target.value))
         }
