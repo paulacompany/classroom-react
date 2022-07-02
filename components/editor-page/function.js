@@ -89,6 +89,5 @@ export async function sendDataToDataBase({
             setAlert('ERROR')
             break;
     }
-    window.alert('Please check the new message.')
     setClickStates(true)
 }

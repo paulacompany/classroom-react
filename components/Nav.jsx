@@ -34,6 +34,9 @@ export default function nav() {
                             <Link href={'/blog'}><a className="nav-link">Blog</a></Link>
                         </li>
                         <li className="nav-item">
+                            <Link href={'/test'}><a className="nav-link">Test</a></Link>
+                        </li>
+                        <li className="nav-item">
                             <Link href={'/profile'}><a className="nav-link">Profile</a></Link>
                         </li>
                         <li className="nav-item">

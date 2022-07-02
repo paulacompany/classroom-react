@@ -342,7 +342,7 @@ textarea {
 /* test */
 
 .test-container{
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .describe{
@@ -350,5 +350,14 @@ textarea {
 }
 
 .test-preview-img{
-    width: 60%;
+    max-width: 50rem;
+    width: 100%;
+}
+
+.test-question-img{
+    width: 100%;
+}
+
+.test-subject-container{
+    min-height: 5rem;
 }

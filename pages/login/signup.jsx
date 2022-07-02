@@ -28,7 +28,7 @@ export default function Signup() {
         if (checkItem) {
             return (
                 <>
-                    <p className="h3 m-2 mt-5">conform code</p>
+                    <p className="h3 m-2 mt-5">confirmed code</p>
                     <p className="mx-2">please check your email</p>
                     <input className="form-control mb-5" type={'number'} onKeyUp={e => {
                         setCheckNumber(e.target.value)

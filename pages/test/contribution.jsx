@@ -14,7 +14,12 @@ export default function Contribution() {
     let [classListJson, setClassListJson] = useState([])
     let [answer, setAnswer] = useState('')
     let imgPreviewRef = useRef()
-    let clickStatus = useRef(false)
+    let clickStatus = useRef(true)
+    let answerARef = useRef()
+    let answerBRef = useRef()
+    let answerCRef = useRef()
+    let answerDRef = useRef()
+    let answerOtherRef = useRef()
 
 
     useEffect(() => {
@@ -34,10 +39,10 @@ export default function Contribution() {
 
 
     useEffect(() => {
-        getUser(setEmail, setPassword, false)
-        if (!submitState) return
-        if(clickStatus.current) return
 
+        getUser(setEmail, setPassword, false)
+        if (submitState == 0) return
+        if (!clickStatus.current) return
         async function sendToImgur() {
 
             if (!email || !password) {
@@ -45,10 +50,11 @@ export default function Contribution() {
                 return
             }
 
+
             if (!name && !file) {
                 alert('Check the information complete')
                 return
-            }else if(!answer && !classList){
+            } else if (!answer && !classList) {
                 alert('Check the information complete')
                 return
             }
@@ -61,6 +67,8 @@ export default function Contribution() {
             let headers = {
                 Authorization: `Bearer ${IMAGE_AUTH}`,
             }
+
+            clickStatus.current = false
 
             let res = await fetch('https://api.imgur.com/3/image', {
                 method: 'POST',
@@ -96,10 +104,10 @@ export default function Contribution() {
 
             alert(data + ' step 2')
 
-            if (data == 'success') {
+            if (data == 'ok') {
                 location.reload()
-            }else{
-                clickStatus.current = false
+            } else {
+                clickStatus.current = true
             }
         }
         sendToImgur()
@@ -108,8 +116,7 @@ export default function Contribution() {
     }, [submitState])
 
     function submit() {
-        clickStatus.current = false
-        setSubmitState(prop => prop+1)
+        setSubmitState(prop => prop + 1)
     }
 
     function fileChange(e) {
@@ -131,22 +138,30 @@ export default function Contribution() {
 
     function changeA() {
         setAnswer('a')
+        answerOtherRef.current.value = ''
     }
 
     function changeB() {
         setAnswer('b')
+        answerOtherRef.current.value = ''
     }
 
     function changeC() {
         setAnswer('c')
+        answerOtherRef.current.value = ''
     }
 
     function changeD() {
         setAnswer('d')
+        answerOtherRef.current.value = ''
     }
 
     function changeOther(e) {
         setAnswer(e.target.value)
+        answerARef.current.checked = false
+        answerBRef.current.checked = false
+        answerCRef.current.checked = false
+        answerDRef.current.checked = false
     }
 
     return (
@@ -154,15 +169,15 @@ export default function Contribution() {
             <h1>contribution</h1>
             <div className="m-0 m-sm-0">
                 <p className="h3 mt-5 mb-5">upload image :</p>
-                <div>
+                <div className="">
+                    <img ref={imgPreviewRef} alt="You image is not the correct file type" src="/img/reveal.png" className="test-preview-img border d-block" />
                     <input
                         type={'file'}
                         id="file"
                         className="d-none"
                         onChange={fileChange}
                     />
-                    <label for="file" className="btn btn-primary m-3 btn-lg">upload</label>
-                    <img ref={imgPreviewRef} alt="You image is not the correct file type" src="/img/reveal.png" className="test-preview-img border" />
+                    <label for="file" className="btn btn-primary mt-3 btn-lg">upload</label>
                 </div>
 
                 <p className="h3 mt-5 mb-5">choose the class :</p>
@@ -188,16 +203,18 @@ export default function Contribution() {
                 />
 
                 <p className="h3 mt-5 mb-5">select the answer :</p>
-                <div className="d-flex align-items-center gap-2">
-                    <input type={'radio'} className="form-check-input mt-0" value={'a'} name="answer" id="answerA" onChange={changeA} />
-                    <label for="answerA">a.</label>
-                    <input type={'radio'} className="form-check-input mt-0" value={'b'} name="answer" id="answerB" onChange={changeB} />
-                    <label for="answerB">b.</label>
-                    <input type={'radio'} className="form-check-input mt-0" value={'c'} name="answer" id="answerC" onChange={changeC} />
-                    <label for="answerC">c.</label>
-                    <input type={'radio'} className="form-check-input mt-0" value={'d'} name="answer" id="answerD" onChange={changeD} />
-                    <label for="answerD">d.</label>
-                    <input type={'text'} className="form-control" placeholder="Other Answer" onChange={changeOther} />
+                <div className="mt-5">
+                    <div className="d-flex align-items-center">
+                        <input type={'radio'} className="form-check-input mt-0 fs-4" value={'a'} name="answer" id="answerA" onChange={changeA} ref={answerARef} />
+                        <label htmlFor="answerA" className="fs-4 px-3">a.</label>
+                        <input type={'radio'} className="form-check-input mt-0 fs-4" value={'b'} name="answer" id="answerB" onChange={changeB} ref={answerBRef} />
+                        <label htmlFor="answerB" className="fs-4 px-3">b.</label>
+                        <input type={'radio'} className="form-check-input mt-0 fs-4" value={'c'} name="answer" id="answerC" onChange={changeC} ref={answerCRef} />
+                        <label htmlFor="answerC" className="fs-4 px-3">c.</label>
+                        <input type={'radio'} className="form-check-input mt-0 fs-4" value={'d'} name="answer" id="answerD" onChange={changeD} ref={answerDRef} />
+                        <label for="answerD" className="fs-4 px-3">d.</label>
+                    </div>
+                    <input type={'text'} className="form-control mt-3" placeholder="Other Answer" onChange={changeOther} ref={answerOtherRef} />
                 </div>
 
 
