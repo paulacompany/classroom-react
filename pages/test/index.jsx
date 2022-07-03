@@ -54,9 +54,11 @@ export default function Test() {
         })
         let data = await res.text()
         let formatArray = data.split(',')
-        let i = 0
+        let redirectState = true
         formatArray.map((item, number)=>{
-            if(!myTestListRef.current.includes(item)){
+            console.log('hi');
+            if(!myTestListRef.current.includes(item) && redirectState){
+                redirectState = false
                 location.href = `/test/question?class=${className}&id=${formatArray[number]}`
             }
         })

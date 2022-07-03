@@ -132,20 +132,12 @@ export default function Question() {
             alert('All the question you have been cleared')
             router.push('/test')
         } else {
-            // get the next value
-            let nextValueState = false;
+            let redirectState = true
             formatArray.map(item => {
-                let isSame = false
-                myFormatArray.current.map(myItem => {
-                    if(item == myItem){
-                        isSame = true
-                    }
-                })
-                if (nextValueState && !isSame) {
+                let isSame = myFormatArray.current.includes(item)
+                if ((item > questionId.current) && !isSame && redirectState) {
+                    redirectState = false
                     location.href = currentURL.current + `?class=${classListName.current}&id=${item}`
-                }
-                if (item == questionId.current) {
-                    nextValueState = true
                 }
             })
             router.push('/test')
