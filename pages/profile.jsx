@@ -28,8 +28,7 @@ export default function Profile() {
                 setEmailAndPassword(false, false, 'true')
                 route.push('/')
             } else {
-                alert('You have to login')
-                route.push('/')
+                route.push('/login')
             }
         }
         function turnToOn() {

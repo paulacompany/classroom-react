@@ -7,6 +7,9 @@ export function alertCallback(action, setAlert) {
      *      DELETE OK
      *      PASSWORD ERROR
      *      ERROR
+     * TEST:
+     *     CORRECT 
+     *
      * 
      */
     let alertDataDb = {
@@ -29,6 +32,10 @@ export function alertCallback(action, setAlert) {
         ERROR: {
             message: 'An unknown error has occurred. Please try again later.',
             classData: 'danger'
+        },
+        CORRECT: {
+            message: 'answer correct!!',
+            classData: 'success'
         }
 
     }
@@ -70,6 +77,12 @@ export function alertCallback(action, setAlert) {
         return getAlertJsx(
             alertDataDb.ERROR.message,
             alertDataDb.ERROR.classData
+        )
+    }
+    if(action === 'CORRECT'){
+        return getAlertJsx(
+            alertDataDb.CORRECT.message,
+            alertDataDb.CORRECT.classData
         )
     }
 }

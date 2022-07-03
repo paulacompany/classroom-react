@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TEST_URL, LOGIN } from "../../env/config";
 import { useRouter } from "next/router";
 import getUser from "../../common/getUser";
+import Ckeckload from "../../components/Checkload"
 
 export default function Test() {
 
@@ -11,13 +12,23 @@ export default function Test() {
     let [testJson, setTestJson] = useState([])
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
+    let [loadState, setLoadState] = useState(false)
     let myTestListRef = useRef()
+    let firstTime = useRef(true)
 
     useEffect(() => {
         getUser(setEmail, setPassword, false)
 
+        if(firstTime.current){
+            firstTime.current = false
+            return
+        }
+
         async function getMyTestList(){
-            if(!email && !password) return
+            if(!email && !password){
+                location.href = '/login'
+                return
+            }
             let res = await fetch(`${LOGIN}?email=${email}&password=${password}&mode=gettest`)
             let data = await res.text()
             if(data == 'error'){
@@ -40,6 +51,7 @@ export default function Test() {
             })
             let data = await res.json()
             setTestJson(data)
+            setLoadState(true)
         }
         getTheTestClass()
     }, [email, password])
@@ -62,8 +74,9 @@ export default function Test() {
                 location.href = `/test/question?class=${className}&id=${formatArray[number]}`
             }
         })
-        router.push('/')
-        
+        if(redirectState){
+            router.push('/')
+        }
     }
 
     return (
@@ -75,7 +88,7 @@ export default function Test() {
                 </div>
             </div>
             <div className="m-0 m-sm-5 mt-5">
-
+                <Ckeckload loadState={loadState} />
                 {
                     testJson.map(item => {
                         return (

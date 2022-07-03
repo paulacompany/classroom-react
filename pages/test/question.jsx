@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { TEST_URL, LOGIN } from "../../env/config"
 import getUser from "../../common/getUser"
 import Ckeckload from "../../components/Checkload"
+import { alertCallback } from "../../common/alertCallback"
 
 export default function Question() {
 
@@ -13,6 +14,7 @@ export default function Question() {
     let [clickState, setClickState] = useState(false)
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
+    let [alert, setAlert] = useState('')
     let answerARef = useRef()
     let answerBRef = useRef()
     let answerCRef = useRef()
@@ -116,7 +118,7 @@ export default function Question() {
 
         if (answer == testJson.answer) {
             setClickState(true)
-            alert('correct')
+            setAlert('CORRECT')
         } else {
             alert('wrong\nthe answer is ' + testJson.answer)
         }
@@ -140,7 +142,9 @@ export default function Question() {
                     location.href = currentURL.current + `?class=${classListName.current}&id=${item}`
                 }
             })
-            router.push('/test')
+            if(redirectState){
+                router.push('/test')
+            }
         }
     }
 
@@ -213,6 +217,7 @@ export default function Question() {
     return (
         <div className="test-container container mt-5 mb-5">
             <Ckeckload loadState={loadState} />
+            {alertCallback(alert, setAlert)}
             {renderFunction()}
         </div>
     )
