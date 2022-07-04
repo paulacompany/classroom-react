@@ -50,7 +50,7 @@ export default function Signup() {
     }
 
     async function checkFetch(email, password, code) {
-        let res = await fetch(`${LOGIN}?email=${email}&password=${password}&mode=conform&number=${code}`)
+        let res = await fetch(`${LOGIN}?email=${encodeURI(email)}&password=${encodeURI(password)}&mode=conform&number=${encodeURI(code)}`)
         let data = await res.text()
 
         if (data == 'ok') {

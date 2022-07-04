@@ -71,7 +71,7 @@ export async function sendDataToDataBase({
 
     if (!clickStates) return
     setClickStates(false)
-    let fetchUrl = `${GOOGLE_SHEET_URL}?year=${todayYear}&month=${todayMonth}&datetoday=${todayDate}&day=${todayDay}&subject=${subject}&action=${doing}&book=${book}&date=${logDate}&pages=${pages}&des=${desView}&password=${password}&mode=select`
+    let fetchUrl = `${GOOGLE_SHEET_URL}?year=${todayYear}&month=${todayMonth}&datetoday=${todayDate}&day=${todayDay}&subject=${subject}&action=${doing}&book=${book}&date=${logDate}&pages=${encodeURI(pages)}&des=${encodeURI(desView)}&password=${encodeURI(password)}&mode=select`
     let res = await fetch(fetchUrl)
     let status = await res.text()
     switch (status) {

@@ -12,7 +12,7 @@ export default function Login() {
     let router = useRouter();
 
     async function click() {
-        let res = await fetch(`${LOGIN}?email=${email}&password=${emailPassword}&mode=check`)
+        let res = await fetch(`${LOGIN}?email=${encodeURI(email)}&password=${encodeURI(emailPassword)}&mode=check`)
         let data = await res.text()
         if (data == 'password error') {
             alert(data)
