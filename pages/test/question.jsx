@@ -12,9 +12,11 @@ export default function Question() {
     let [loadState, setLoadState] = useState(false)
     let [answer, setAnswer] = useState('')
     let [clickState, setClickState] = useState(false)
+    let [wrongAnswerClickState, setWrongAnswerClickState] = useState(false)
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
     let [alert, setAlert] = useState('')
+    let [answerPreview, setAnswerPreview] = useState('')
     let answerARef = useRef()
     let answerBRef = useRef()
     let answerCRef = useRef()
@@ -45,15 +47,15 @@ export default function Question() {
         questionId.current = router.query.id
         classListName.current = router.query.class
 
-        async function getMyTestList(){
-            if(!email && !password) return
+        async function getMyTestList() {
+            if (!email && !password) return
             let res = await fetch(`${LOGIN}?email=${email}&password=${password}&mode=gettest`)
             let data = await res.text()
 
-            if(data == 'error'){
+            if (data == 'error') {
                 alert('error')
                 router.push('/test')
-            }else{
+            } else {
                 myFormatArray.current = data.split(',')
             }
         }
@@ -120,31 +122,25 @@ export default function Question() {
             setClickState(true)
             setAlert('CORRECT')
         } else {
-            alert('wrong\nthe answer is ' + testJson.answer)
+            setWrongAnswerClickState(true)
+            setAnswerPreview(() => {
+                return 'Answer: ' + testJson.answer
+            })
+            setAlert('WRONG')
         }
-
-        if (answer == testJson.answer) return
-
-        redirectURL(formatArray.current)
-
     }
 
     function redirectURL(formatArray) {
-        if (questionId.current == formatArray[formatArray.length - 1]) {
-            alert('All the question you have been cleared')
-            router.push('/test')
-        } else {
-            let redirectState = true
-            formatArray.map(item => {
-                let isSame = myFormatArray.current.includes(item)
-                if ((item > questionId.current) && !isSame && redirectState) {
-                    redirectState = false
-                    location.href = currentURL.current + `?class=${classListName.current}&id=${item}`
-                }
-            })
-            if(redirectState){
-                router.push('/test')
+        let redirectState = true
+        formatArray.map(item => {
+            let isSame = myFormatArray.current.includes(item)
+            if ((item > questionId.current) && !isSame && redirectState) {
+                redirectState = false
+                location.href = currentURL.current + `?class=${classListName.current}&id=${item}`
             }
+        })
+        if (redirectState) {
+            router.push('/test')
         }
     }
 
@@ -156,6 +152,7 @@ export default function Question() {
                     <img src={testJson.imageURL} className="test-question-img mt-5" />
                     <p className="text-secondary">by : {testJson.userName}</p>
                     <p className="fw-bold fs-4 mt-2">{testJson.des}</p>
+                    <p className="display-6 fw-bold text-danger">{answerPreview}</p>
                     <div className="mt-5">
                         <div className="d-flex align-items-center">
                             <input type={'radio'} className="form-check-input mt-0 fs-4" value={'a'} name="answer" id="answerA" onChange={changeA} ref={answerARef} />
@@ -169,15 +166,25 @@ export default function Question() {
                         </div>
                         <input type={'text'} className="form-control mt-3" placeholder="Other Answer" onChange={changeOther} ref={answerOtherRef} />
                     </div>
-                    <button
-                        className="btn btn-danger mt-5 mb-5 mx-2"
-                        onClick={clickCheck}
-                    >check</button>
+                    {renderButton()}
                     {renderClean()}
                 </div>
             )
         } else {
             return ''
+        }
+    }
+
+    function renderButton() {
+        if (clickState || wrongAnswerClickState) {
+            return ''
+        } else {
+            return (
+                <button
+                    className="btn btn-danger mt-5 mb-5 mx-2"
+                    onClick={clickCheck}
+                >check</button>
+            )
         }
     }
 
@@ -195,11 +202,29 @@ export default function Question() {
     function renderClean() {
         if (clickState) {
             return (
-                <div className="d-flex">
+                <div className="d-flex mt-5">
                     <button
                         className="btn btn-success mx-2"
                         onClick={addTheCleanList}
                     >clean</button>
+                    <button
+                        className="btn btn-warning mx-2"
+                        onClick={() => {
+                            redirectURL(formatArray.current)
+                        }}
+                    >skip
+                    </button>
+                </div>
+            )
+        } else {
+            return ''
+        }
+    }
+
+    function renderNext() {
+        if (wrongAnswerClickState) {
+            return (
+                <div className="d-flex mt-5">
                     <button
                         className="btn btn-warning mx-2"
                         onClick={() => {
@@ -219,6 +244,7 @@ export default function Question() {
             <Ckeckload loadState={loadState} />
             {alertCallback(alert, setAlert)}
             {renderFunction()}
+            {renderNext()}
         </div>
     )
 }

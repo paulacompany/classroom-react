@@ -8,7 +8,8 @@ export function alertCallback(action, setAlert) {
      *      PASSWORD ERROR
      *      ERROR
      * TEST:
-     *     CORRECT 
+     *     CORRECT
+     *      WRONG
      *
      * 
      */
@@ -36,6 +37,10 @@ export function alertCallback(action, setAlert) {
         CORRECT: {
             message: 'answer correct!!',
             classData: 'success'
+        },
+        WRONG:{
+            message: 'answer wrong!!',
+            classData: 'danger'
         }
 
     }
@@ -83,6 +88,12 @@ export function alertCallback(action, setAlert) {
         return getAlertJsx(
             alertDataDb.CORRECT.message,
             alertDataDb.CORRECT.classData
+        )
+    }
+    if(action === 'WRONG'){
+        return getAlertJsx(
+            alertDataDb.WRONG.message,
+            alertDataDb.WRONG.classData
         )
     }
 }
