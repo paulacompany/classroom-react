@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
 import getUser from "../../common/getUser";
 import Ckeckload from "../../components/Checkload"
 import { getMyTestList, getTheTestClass, getTheQuestionId } from "../../components/test-page/function";
 
 export default function Test() {
 
+    const router = useRouter()
     let [testJson, setTestJson] = useState([])
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
@@ -22,7 +23,7 @@ export default function Test() {
             return
         }
 
-        getMyTestList(email, password, myTestListRef)
+        getMyTestList(email, password, myTestListRef, router)
         getTheTestClass(setTestJson, setLoadState)
     }, [email, password])
 
@@ -46,7 +47,7 @@ export default function Test() {
                                 <button
                                     className="btn btn-primary m-3"
                                     onClick={()=>{
-                                        getTheQuestionId(item, myTestListRef)
+                                        getTheQuestionId(item, myTestListRef, router)
                                     }}
                                 >test</button>
                             </div>
