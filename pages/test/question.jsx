@@ -4,6 +4,7 @@ import { TEST_URL, LOGIN } from "../../env/config"
 import getUser from "../../common/getUser"
 import Ckeckload from "../../components/Checkload"
 import { alertCallback } from "../../common/alertCallback"
+import Answer from "../../components/test-page/Answer"
 
 export default function Question() {
 
@@ -17,11 +18,6 @@ export default function Question() {
     let [password, setPassword] = useState('')
     let [alert, setAlert] = useState('')
     let [answerPreview, setAnswerPreview] = useState('')
-    let answerARef = useRef()
-    let answerBRef = useRef()
-    let answerCRef = useRef()
-    let answerDRef = useRef()
-    let answerOtherRef = useRef()
     let currentURL = useRef()
     let classListName = useRef()
     let questionId = useRef()
@@ -78,34 +74,6 @@ export default function Question() {
 
     }, [router.isReady, email, password])
 
-    function changeA() {
-        setAnswer('a')
-        answerOtherRef.current.value = ''
-    }
-
-    function changeB() {
-        setAnswer('b')
-        answerOtherRef.current.value = ''
-    }
-
-    function changeC() {
-        setAnswer('c')
-        answerOtherRef.current.value = ''
-    }
-
-    function changeD() {
-        setAnswer('d')
-        answerOtherRef.current.value = ''
-    }
-
-    function changeOther(e) {
-        setAnswer(e.target.value)
-        answerARef.current.checked = false
-        answerBRef.current.checked = false
-        answerCRef.current.checked = false
-        answerDRef.current.checked = false
-    }
-
     async function clickCheck() {
 
         let formData = new FormData()
@@ -153,19 +121,7 @@ export default function Question() {
                     <p className="text-secondary">by : {testJson.userName}</p>
                     <p className="fw-bold fs-4 mt-2">{testJson.des}</p>
                     <p className="display-6 fw-bold text-danger">{answerPreview}</p>
-                    <div className="mt-5">
-                        <div className="d-flex align-items-center">
-                            <input type={'radio'} className="form-check-input mt-0 fs-4" value={'a'} name="answer" id="answerA" onChange={changeA} ref={answerARef} />
-                            <label htmlFor="answerA" className="fs-4 px-3">a.</label>
-                            <input type={'radio'} className="form-check-input mt-0 fs-4" value={'b'} name="answer" id="answerB" onChange={changeB} ref={answerBRef} />
-                            <label htmlFor="answerB" className="fs-4 px-3">b.</label>
-                            <input type={'radio'} className="form-check-input mt-0 fs-4" value={'c'} name="answer" id="answerC" onChange={changeC} ref={answerCRef} />
-                            <label htmlFor="answerC" className="fs-4 px-3">c.</label>
-                            <input type={'radio'} className="form-check-input mt-0 fs-4" value={'d'} name="answer" id="answerD" onChange={changeD} ref={answerDRef} />
-                            <label for="answerD" className="fs-4 px-3">d.</label>
-                        </div>
-                        <input type={'text'} className="form-control mt-3" placeholder="Other Answer" onChange={changeOther} ref={answerOtherRef} />
-                    </div>
+                    <Answer setAnswer={setAnswer} />
                     {renderButton()}
                     {renderClean()}
                 </div>
