@@ -32,8 +32,7 @@ export default function Question() {
             return
         }
         if (!email && !password) {
-            alert('Please login first')
-            router.push('/test')
+            router.push('/login')
         }
     }, [email, password])
 
