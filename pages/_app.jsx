@@ -12,7 +12,6 @@ export default function ({ Component, pageProps }) {
             <Head>
                 <title>classroom | paula</title>
             </Head>
-            {renderAD()}
             <Component {...pageProps} />
         </Layout>
     )
