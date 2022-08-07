@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Login from "../components/setting/Login";
-import Button from "../components/setting/Button";
-import New from "../components/setting/New";
+import Login from "../components/setting-page/Login";
+import Button from "../components/setting-page/Button";
+import New from "../components/setting-page/New";
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { useRouter } from 'next/router'
 

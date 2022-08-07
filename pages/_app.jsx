@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../components/Layout";
 import '../css/global.css'
 import Head from "next/head";
-import Link from "next/link";
+import { Provider } from "react-redux";
+import store from "../common/redux/store.js"
 
 
 export default function ({ Component, pageProps }) {
@@ -12,7 +13,9 @@ export default function ({ Component, pageProps }) {
             <Head>
                 <title>classroom | paula</title>
             </Head>
-            <Component {...pageProps} />
+            <Provider store={store}>
+                <Component {...pageProps} />
+            </Provider>
         </Layout>
     )
 }

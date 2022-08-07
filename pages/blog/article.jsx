@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useRouter } from 'next/router'
 import { BLOG_URL } from "../../env/config"
-import Ckeckload from "../../components/Checkload";
+import Checkload from "../../components/Checkload";
 const FormData = require('form-data');
 
 

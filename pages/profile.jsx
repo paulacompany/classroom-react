@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import Ckeckload from "../components/Checkload";
+import Checkload from "../components/Checkload";
 import Content from "../components/blog/Content";
 import UserSetting from "../components/profile/userSetting";
 import { useRouter } from "next/router";

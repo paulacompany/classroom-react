@@ -1,38 +1,37 @@
 import React from "react"
+import { useDispatch, useSelector } from "react-redux"
+import LookPageReducer from "../../common/redux/reducer/LookPageReducer.js"
 
-export default function Button({look, setLook, isDel, setIsDel, alert, setAlert}){
+export default function Button(){
+    let dispatch = useDispatch()
+    let look = useSelector(state => state.look)
+    let deleteState = useSelector(state => state.deleteState)
 
     function lastDay(){
         if(look - 1 < -14){
-            setAlert('LAST')
+            dispatch(LookPageReducer.actions.setAlert('LAST'))
             return
         }
-        setLook(prop => {
-            prop--
-            return prop
-        })
+        dispatch(LookPageReducer.actions.setLook(-1))
     }
 
     function nextDay(){
         if(look + 1 > 0){
-            setAlert('NEWEST')
+            dispatch(LookPageReducer.actions.setAlert('NEWEST'))
             return
         }
-        setLook(prop => {
-            prop++
-            return prop
-        })
+        dispatch(LookPageReducer.actions.setLook(1))
     }
 
     function today(){
-        setLook(0)
+        dispatch(LookPageReducer.actions.setLook({today: true}))
     }
 
     function del(){
-        if(!isDel){
-            setIsDel(true)
+        if(!deleteState){
+            dispatch(LookPageReducer.actions.setDeleteState(true))
         }else{
-            setIsDel(false)
+            dispatch(LookPageReducer.actions.setDeleteState(false))
         }
     }
 
