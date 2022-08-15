@@ -8,6 +8,6 @@ classroom是一個使用react framework nextjs，
 1. 外部引用
 1. 製作介紹
 
-## 介紹
+## 介
 
 
