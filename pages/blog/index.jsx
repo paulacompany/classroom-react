@@ -1,64 +1,65 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useRef } from "react"
+import { useSelector, useDispatch } from "react-redux";
 import Fuse from "fuse.js";
-import Content from "../../components/blog/Content";
+import { v4 as uuidv4 } from 'uuid';
 import Link from "next/link"
+import Content from "../../components/blog-page/Content";
+import BlogPageReducer from "../../common/redux/reducer/BlogPageReducer";
 import { BLOG_URL } from "../../env/config"
-const FormData = require('form-data');
+const FormData = require('form-data')
+const FormBody = new FormData()
 
-
-function checkLoad(loadState) {
-    if (loadState) {
-        return
-    } else {
-        return (
-            <div className="d-flex justify-content-center">
-                <div className="spinner-border spinner-border-lg" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        )
-    }
+export async function getServerSideProps() {
+    FormBody.append('mode', 'look')
+    FormBody.append('key', uuidv4())
+    let res = await fetch(BLOG_URL, {
+        method: 'post',
+        body: FormBody
+    })
+    let data = await res.json()
+    return { props: { data } }
 }
 
 
-export default function Blog() {
+export default function Blog({ data }) {
 
-    let FormBody = new FormData()
-
-    let [json, setJson] = useState([])
-    let [searchState, setSearchState] = useState(false)
     let jsonRef = useRef()
-    let [load, setLoad] = useState(false)
-    let fuse = new Fuse(jsonRef.current, {
+    let dispatch = useDispatch()
+    let json = useSelector(state => state.blog.json)
+    const fuse = new Fuse(jsonRef.current, {
         keys: ['title']
     })
 
     useEffect(() => {
-        FormBody.append('mode', 'look')
-
-        fetch(BLOG_URL, {
-            method: 'post',
-            body: FormBody
-        }).then(res => {
-            return res.json()
-        }).then(data => {
-            setJson(data)
-            jsonRef.current = data
-            setLoad(true)
-        })
+        dispatch(BlogPageReducer.actions.setJson(data))
+        jsonRef.current = data
     }, [])
 
-    function changeSearch(e){
+    useEffect(() => {
+        console.log(json);
+    }, [json])
+
+    function changeSearch(e) {
         let value = e.target.value
-        if(!load) return
-        if(value === ''){
-            setSearchState(false)
-            setJson(jsonRef.current)
+        if (value === '') {
+            dispatch(
+                BlogPageReducer.actions.setJson(jsonRef.current)
+            )
             return
         }
-        setJson(fuse.search(value))
-        setSearchState(true)
-        
+        dispatch(
+            BlogPageReducer.actions.setJson(
+                handleSearch(fuse.search(value))
+            )
+        )
+    }
+
+    function handleSearch(data) {
+        let resultArray = []
+        data.map(item => {
+            resultArray.push(item.item)
+        })
+        return resultArray
     }
 
     return (
@@ -75,8 +76,7 @@ export default function Blog() {
                     <Link href={'/blog/post'}><button className="btn btn-success mx-2">post</button></Link>
                 </div>
             </div>
-            <Content json={json} state={searchState} />
-            {checkLoad(load)}
+            <Content json={json} />
         </div>
     )
 }

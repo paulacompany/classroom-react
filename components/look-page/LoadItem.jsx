@@ -7,19 +7,25 @@ import LookPageReducer from "../../common/redux/reducer/LookPageReducer.js"
 export default function LoadItem(){
     let dispatch = useDispatch()
     // index of the number pages 0 -> today
-    let look = useSelector(state => state.look)
-    let data = useSelector(state => state.data)
-    let deleteState = useSelector(state => state.deleteState)
-    let password = useSelector(state => state.password)
+    let look = useSelector(state => state.look.look)
+    let data = useSelector(state => state.look.data)
+    let deleteState = useSelector(state => state.look.deleteState)
+    let password = useSelector(state => state.look.password)
     
     async function change(mode, number) {
-        
+
+        if(mode == 'UNDO'){
+            dispatch(LookPageReducer.actions.setSpecifyData({index: number, state: ''}))
+        }else{
+            dispatch(LookPageReducer.actions.setSpecifyData({index: number, state: 'Del'}))
+        }
+        dispatch(LookPageReducer.actions.setDeleteState(false))
         let fetchUrl = (mode == 'UNDO') ? 
             `${GOOGLE_SHEET_URL}?mode=rep&rep=${number + 1}&password=${password}&repdate=${look}` :
             `${GOOGLE_SHEET_URL}?mode=del&del=${number + 1}&password=${password}&deldate=${look}`
         let res = await fetch(fetchUrl);
-        let data = await res.text()
-        switch (data) {
+        let dataMessage = await res.text()
+        switch (dataMessage) {
             case 'ok':
                 dispatch(LookPageReducer.actions.setAlert('OK'))
                 break;
@@ -30,7 +36,7 @@ export default function LoadItem(){
                 dispatch(LookPageReducer.actions.setAlert('ERROR'))
                 break;
         }
-        dispatch(LookPageReducer.actions.setDeleteState(false))
+        
     }
     return(
         data.map((item, i) => {

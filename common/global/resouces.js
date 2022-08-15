@@ -45,4 +45,35 @@ const bookText = [
     "考卷"
 ]
 
-export { subjectText, doingText, bookText }
+const alertDataDb = {
+    LAST: {
+        message: 'Wrong! This is the last day\'s record. Please click the "today" button.',
+        classData: 'danger'
+    },
+    NEWEST: {
+        message: 'Warning! This is the newest data.',
+        classData: 'warning'
+    },
+    DELETE_OK: {
+        message: 'successful!',
+        classData: 'success'
+    },
+    PASSWORD_ERROR: {
+        message: 'Incorrect password.',
+        classData: 'warning',
+    },
+    ERROR: {
+        message: 'An unknown error has occurred. Please try again later.',
+        classData: 'danger'
+    },
+    CORRECT: {
+        message: 'answer correct!!',
+        classData: 'success'
+    },
+    WRONG:{
+        message: 'answer wrong!!',
+        classData: 'danger'
+    }
+}
+
+export { subjectText, doingText, bookText, alertDataDb }

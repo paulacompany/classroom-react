@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Ckeckload({ loadState }) {
+export default function CheckLoad({ loadState }) {
 
     if (loadState) {
         return ''

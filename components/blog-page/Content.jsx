@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import { compile } from "html-to-text"
-export default function Content({ json, state }) {
+export default function Content({ json }) {
 
     let defaultImage = '/img/gray.png'
     let convert = compile({
@@ -14,23 +14,15 @@ export default function Content({ json, state }) {
                 json.map(item => {
                     let itemId, itemTitle, itemImg, itemBody;
 
-                    if (state) {
-                        itemImg = item.item.img
-                        itemTitle = item.item.title
-                        itemId = item.item.id
-                        itemBody = item.item.body
-                    } else {
-                        itemImg = item.img
-                        itemTitle = item.title
-                        itemId = item.id
-                        itemBody = item.body
-                    }
-
+                    itemImg = item.img
+                    itemTitle = item.title
+                    itemId = item.id
+                    itemBody = item.body
                     itemImg = itemImg ? itemImg : defaultImage
 
                     if (!itemTitle) return
                     return (
-                        <Link href={`./blog/article?id=${itemId}`}>
+                        <Link href={`./blog/${itemId}`}>
                             <div className="blog-logo m-5 d-flex flex-column justify-content-between">
                                 <div className="img-container">
                                     <img src={itemImg} className="text-center" />

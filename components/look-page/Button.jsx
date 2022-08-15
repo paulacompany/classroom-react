@@ -4,8 +4,8 @@ import LookPageReducer from "../../common/redux/reducer/LookPageReducer.js"
 
 export default function Button(){
     let dispatch = useDispatch()
-    let look = useSelector(state => state.look)
-    let deleteState = useSelector(state => state.deleteState)
+    let look = useSelector(state => state.look.look)
+    let deleteState = useSelector(state => state.look.deleteState)
 
     function lastDay(){
         if(look - 1 < -14){

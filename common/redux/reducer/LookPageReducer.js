@@ -32,6 +32,9 @@ const LookPageReducer = createSlice({
         setData(state, action){
             state.data = action.payload
         },
+        setSpecifyData(state, action){
+            state.data[action.payload.index].del = action.payload.state
+        },
         setLoadState(state, action){
             state.loadState = action.payload
         }

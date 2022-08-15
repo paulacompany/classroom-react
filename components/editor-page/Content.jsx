@@ -84,7 +84,7 @@ export default function Content() {
                 <p className="d-block h2 m-3">日期:</p>
                 <input
                     type={'date'}
-                    className="m-4"
+                    className="m-4 form-control"
                     onChange={e => addDate(e.target.value)}
                 />
             </div>
@@ -92,7 +92,7 @@ export default function Content() {
                 <p className="d-block h2 m-3">頁數:</p>
                 <input
                     type={'text'}
-                    className="m-4"
+                    className="m-4 form-control"
                     placeholder="p.1 - p.5"
                     onChange={e => addPages(tify(e.target.value))}
                     value={pages} />
@@ -100,17 +100,17 @@ export default function Content() {
             <div>
                 <p className="d-block h2 m-3">補充:</p>
                 <textarea
-                    className="m-4 p-2"
+                    className="m-4 p-2 form-control"
                     placeholder="記得要帶"
                     onChange={e => addDes(tify(e.target.value))}
-                ></textarea>
+                />
             </div>
             <div>
                 <p className="d-block h2 m-3">密碼:</p>
                 <input
                     type={'password'}
-                    className="m-4"
-                    placeholder="p.1 - p.5"
+                    className="m-4 form-control"
+                    placeholder="password"
                     onChange={e => addPassword(e.target.value)}
                     value={password}
                 />
