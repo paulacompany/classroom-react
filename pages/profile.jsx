@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import CheckLoad from "../components/CheckLoad";
-import Content from "../components/blog/Content";
+import Content from "../components/blog-page/Content";
 import UserSetting from "../components/profile/userSetting";
 import { useRouter } from "next/router";
 import { BLOG_URL, LOGIN } from "../env/config";

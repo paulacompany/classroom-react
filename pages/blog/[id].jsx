@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react"
 import { v4 as uuidv4 } from 'uuid';
-import { useDispatch, useSelector } from "react-redux";
 import { BLOG_URL } from "../../env/config"
 import { useRouter } from "next/router";
 const FormData = require('form-data');
