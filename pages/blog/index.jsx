@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import Fuse from "fuse.js";
-import { v4 as uuidv4 } from 'uuid';
 import Link from "next/link"
 import Content from "../../components/blog-page/Content";
 import BlogPageReducer from "../../common/redux/reducer/BlogPageReducer";
@@ -9,19 +8,21 @@ import { BLOG_URL } from "../../env/config"
 const FormData = require('form-data')
 const FormBody = new FormData()
 
-export async function getServerSideProps() {
-    FormBody.append('mode', 'look')
-    FormBody.append('key', uuidv4())
-    let res = await fetch(BLOG_URL, {
-        method: 'post',
-        body: FormBody
-    })
-    let data = await res.json()
-    return { props: { data } }
-}
 
+export default function Blog() {
 
-export default function Blog({ data }) {
+    let [data, setData] = useState('')
+
+    async function getData() {
+        FormBody.append('mode', 'look')
+        let res = await fetch(BLOG_URL, {
+            method: 'post',
+            body: FormBody
+        })
+        let data = await res.json()
+        setData(data)
+    }
+    getData()
 
     let jsonRef = useRef()
     let dispatch = useDispatch()
@@ -31,9 +32,10 @@ export default function Blog({ data }) {
     })
 
     useEffect(() => {
+        if(!data) return
         dispatch(BlogPageReducer.actions.setJson(data))
         jsonRef.current = data
-    }, [])
+    }, [data])
 
     useEffect(() => {
         console.log(json);

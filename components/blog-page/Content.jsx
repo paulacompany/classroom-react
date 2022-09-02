@@ -22,7 +22,7 @@ export default function Content({ json }) {
 
                     if (!itemTitle) return
                     return (
-                        <Link href={`./blog/${itemId}`}>
+                        <Link href={`./blog/article?id=${itemId}`}>
                             <div className="blog-logo m-5 d-flex flex-column justify-content-between">
                                 <div className="img-container">
                                     <img src={itemImg} className="text-center" />
