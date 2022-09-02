@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react"
-import Checkload from "../components/Checkload";
+import CheckLoad from "../components/CheckLoad";
 import Content from "../components/blog/Content";
 import UserSetting from "../components/profile/userSetting";
 import { useRouter } from "next/router";
 import { BLOG_URL, LOGIN } from "../env/config";
-import getUser from "../common/getUser";
-import setEmailAndPassword from "../common/setEmailAndPassword";
+import getUser from "../common/global/getUser";
+import setEmailAndPassword from "../common/global/setEmailAndPassword";
 import MyProfile from "../components/profile/myProfile";
 const FormData = require('form-data');
 
@@ -115,7 +115,7 @@ export default function Profile() {
                 {!userMode.current ? <p className="h4 m-4">Anonymous mode:</p> : ''}
                 {!userMode.current ? checkIsProFile() : ''}
             </div>
-            <Ckeckload loadState={loadState} />
+            <CheckLoad loadState={loadState} />
             <div className="d-flex flex-wrap justify-content-between m-2">
                 {resultState ? <MyProfile email={email} json={result} /> : ''}
                 {resultState && !userMode.current ? <UserSetting email={email} password={password} /> : ''}

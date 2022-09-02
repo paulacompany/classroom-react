@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react"
 import { BLOG_URL, LOGIN } from "../../env/config";
 import { useRouter } from 'next/router'
 import { marked as markdown } from 'marked';
-import getUser from "../../common/getUser";
+import getUser from "../../common/global/getUser";
 const FormData = require('form-data');
 
 export default function Post() {
