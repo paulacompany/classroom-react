@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { LOGIN } from "../../env/config";
 import { useRouter } from "next/router";
-import setEmailAndPassword from "../../common/setEmailAndPassword";
+import setEmailAndPassword from "../../common/global/setEmailAndPassword";
 
 export default function Login() {
 
