@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { GOOGLE_SHEET_URL } from "../env/config"
 import { reactLocalStorage } from "reactjs-localstorage";
 import CheckLoad from "../components/CheckLoad";
-import Bottom from "../components/look-page/Button.jsx";
+import Bottom from "../components/look-page/Button";
 import LoadItem from "../components/look-page/LoadItem";
-import Title from "../components/look-page/Title";
+import Title from "../components/look-page/Title.jsx";
 import LookPageReducer from "../common/redux/reducer/LookPageReducer.js";
 import Alert from "../components/Alert";
 
