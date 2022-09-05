@@ -3,6 +3,7 @@ const subjectText = [
     "數學",
     "英文",
     "理化",
+    "地科",
     "地理",
     "公民",
     "歷史",
@@ -59,7 +60,7 @@ const alertDataDb = {
         classData: 'success'
     },
     PASSWORD_ERROR: {
-        message: 'Incorrect password.',
+        message: 'Incorrect password or type.',
         classData: 'warning',
     },
     ERROR: {
@@ -70,10 +71,30 @@ const alertDataDb = {
         message: 'answer correct!!',
         classData: 'success'
     },
-    WRONG:{
+    WRONG: {
         message: 'answer wrong!!',
         classData: 'danger'
+    },
+    HAVE_VERIFIED: {
+        message: 'you have verified before.',
+        classData: 'success'
+    },
+    VERIFIED_ERROR: {
+        message: 'incorrect code we already send a new one',
+        classData: 'warning'
+    },
+    CANNOT_FIND_USER:{
+        message: 'Cannot find this user',
+        classData: 'warning'
     }
 }
 
-export { subjectText, doingText, bookText, alertDataDb }
+const profileSetting = [
+    "password",
+    "name",
+    "photo",
+    "class",
+    "classroom password"
+]
+
+export { subjectText, doingText, bookText, alertDataDb, profileSetting }

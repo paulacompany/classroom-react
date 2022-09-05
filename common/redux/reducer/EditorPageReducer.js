@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initial = {
     password: '',
+    type: '',
     subject: [],
     doing: '',
     book: '',
@@ -18,6 +19,9 @@ const EditorPageReducer = createSlice({
     reducers: {
         password(state, action){
             state.password = action.payload
+        },
+        type(state, action){
+            state.type = action.payload
         },
         subject(state, action){
             state.subject = action.payload

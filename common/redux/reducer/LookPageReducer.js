@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initial = {
     password: '',
+    type: '',
     look: 0,
     data: [],
     deleteState: false,
@@ -17,7 +18,7 @@ const LookPageReducer = createSlice({
             state.alert = action.payload
         },
         setLook(state, action){
-            if(action.payload.today == true){
+            if(action.payload.today === true){
                 state.look = 0
             }else{
                 state.look = state.look + action.payload
@@ -29,8 +30,17 @@ const LookPageReducer = createSlice({
         setPassword(state, action){
             state.password = action.payload
         },
+        setType(state, action){
+            state.type = action.payload
+        },
         setData(state, action){
-            state.data = action.payload
+            if(action.payload.change === true){
+                let dataDetail = state.data.data[action.payload.index].status
+                state.data.data[action.payload.index].status = !dataDetail
+            }else{
+                state.data = action.payload
+            }
+            
         },
         setSpecifyData(state, action){
             state.data[action.payload.index].del = action.payload.state

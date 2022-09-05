@@ -1,4 +1,5 @@
 import moment from "moment";
+import { v4 as uuidv4 } from 'uuid';
 import { change, howManyDaysLeft } from "../global/change.js";
 import { GOOGLE_SHEET_URL } from "../../env/config.js"
 import { useDispatch, useSelector } from "react-redux"
@@ -8,6 +9,7 @@ const todayYear = moment().format('YYYY')
 const todayMonth = moment().format('MM')
 const todayDate = moment().format('DD')
 const todayDay = moment().format('d')
+const mixDate = `${todayYear}年${todayMonth}月${todayDate}日 星期${change(todayDay)}`
 
 
 export default function useEditorFunction() {
@@ -22,6 +24,7 @@ export default function useEditorFunction() {
     let pages = useSelector(state => state.editor.pages)
     let des = useSelector(state => state.editor.des)
     let password = useSelector(state => state.editor.password)
+    let type = useSelector(state => state.editor.type)
 
     class FunctionEditor {
         constructor(page) {
@@ -82,22 +85,27 @@ export default function useEditorFunction() {
         addPassword(password) {
             dispatch(EditorPageReducer.actions.password(password))
         }
+        addType(type){
+            dispatch(EditorPageReducer.actions.type(type))
+        }
         async sendDataBase() {
             if (!clickStates) return
             dispatch(EditorPageReducer.actions.clickStates(false))
-            let fetchUrl = `${GOOGLE_SHEET_URL}?year=${todayYear}&month=${todayMonth}&datetoday=${todayDate}&day=${todayDay}&subject=${subject}&action=${doing}&book=${book}&date=${date}&pages=${encodeURI(pages)}&des=${encodeURI(des)}&password=${encodeURI(password)}&mode=select`
+            let mixData = `${date}${doing}${subject}${book}${pages}${des}`
+            if(mixData == ''){
+                dispatch(EditorPageReducer.actions.clickStates(true))
+                return
+            }
+            let fetchUrl = `${GOOGLE_SHEET_URL}?mode=edit&date=${mixDate}&data=${mixData}&password=${password}&type=${type}&uuid=${uuidv4()}`
             let res = await fetch(fetchUrl)
-            let status = await res.text()
-            switch (status) {
-                case 'ok':
+            let status = await res.json()
+            switch (status.status) {
+                case 200:
                     dispatch(EditorPageReducer.actions.alert('OK'))
                     location.reload()
                     break;
-                case 'password error':
+                case 403:
                     dispatch(EditorPageReducer.actions.alert('PASSWORD ERROR'))
-                    break;
-                case 'error':
-                    dispatch(EditorPageReducer.actions.alert('ERROR'))
                     break;
                 default:
                     dispatch(EditorPageReducer.actions.alert('ERROR'))

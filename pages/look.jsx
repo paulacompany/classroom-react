@@ -14,29 +14,43 @@ export default function Look() {
     let look = useSelector(state => state.look.look)
     let loadState = useSelector(state => state.look.loadState)
     let alert = useSelector(state => state.look.alert)
+    let type = useSelector(state => state.look.type)
 
     useEffect(() => {
-        let password = reactLocalStorage.get('password')
-        dispatch(LookPageReducer.actions.setPassword(password))
+        let localPassword = reactLocalStorage.get('classPassword')
+        let localType = reactLocalStorage.get('type')
+        dispatch(LookPageReducer.actions.setPassword(localPassword))
+        dispatch(LookPageReducer.actions.setType(localType))
     }, [])
 
     useEffect(() => {
         async function getData() {
-            let fetchURL = `${GOOGLE_SHEET_URL}?look=${look}&mode=look`
+            let fetchURL = `${GOOGLE_SHEET_URL}?number=${look}&mode=look&type=${type}`
             let res = await fetch(fetchURL)
             let data = await res.json()
-            console.log(data);
-            dispatch(LookPageReducer.actions.setData(data))
+            if(data.status == 200){
+                dispatch(LookPageReducer.actions.setData(data))
+            }else if(data.status == 403){
+                dispatch(LookPageReducer.actions.setAlert('PASSWORD ERROR'))
+            }else{
+                dispatch(LookPageReducer.actions.setAlert('ERROR'))
+            }
+            
             dispatch(LookPageReducer.actions.setLoadState(true))
         }
+        if(!type) return
         getData()
-    }, [look])
+    }, [look, type])
+
+    function clearAlert(value){
+        dispatch(LookPageReducer.actions.alert(value))
+    }
 
     return (
         <div className="lookContainer container d-flex flex-column justify-content-between h-100">
             <div>
                 <div className="m-5 mx-0">
-                    <Alert alert={alert} reducer={LookPageReducer.actions.setAlert}/>
+                    <Alert alert={alert} setAlert={clearAlert} />
                     <CheckLoad loadState={loadState} />
                 </div>
                 <div className="fs-2 m-4">

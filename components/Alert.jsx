@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { alertDataDb } from "../common/global/resouces";
-import { useDispatch } from "react-redux";
 /**
      * OverRange:
      *      NEWEST -- > 0
@@ -17,12 +16,11 @@ import { useDispatch } from "react-redux";
      */
 
 
-export default function Alert({ alert, reducer }) {
+export default function Alert({ alert, setAlert }) {
 
     let [message, setMessage] = useState('')
     let [classData, setClassData] = useState('')
     let firstTime = useRef(true)
-    let dispatch = useDispatch()
 
     function setMessageState(messageProp, classDataProp) {
         setMessage(messageProp)
@@ -34,13 +32,13 @@ export default function Alert({ alert, reducer }) {
             firstTime.current = false
             return
         }
-        if(!alert) return
+        if (!alert) return
         switch (alert) {
             case 'LAST':
                 setMessageState(
                     alertDataDb.LAST.message,
                     alertDataDb.LAST.classData)
-                    break;
+                break;
             case 'NEWEST':
                 setMessageState(
                     alertDataDb.NEWEST.message,
@@ -77,21 +75,37 @@ export default function Alert({ alert, reducer }) {
                     alertDataDb.WRONG.classData
                 )
                 break;
+            case 'HAVE_VERIFIED':
+                setMessageState(
+                    alertDataDb.HAVE_VERIFIED.message,
+                    alertDataDb.HAVE_VERIFIED.classData
+                )
+                break;
+            case 'VERIFIED_ERROR':
+                setMessageState(
+                    alertDataDb.VERIFIED_ERROR.message,
+                    alertDataDb.VERIFIED_ERROR.classData
+                )
+                break;
+            case 'CANNOT FIND USER':
+                setMessage(
+                    alertDataDb.CANNOT_FIND_USER.message,
+                    alertDataDb.CANNOT_FIND_USER.classData
+                )
+                break;
         }
-        setTimeout(() => {
-            dispatch(reducer(''))
-        }, 1000);
-        console.log('hihihi');
+        setTimeout(()=>{
+            setAlert('')
+        }, 3000)
     }, [alert])
 
     if (!alert) return ''
 
     return (
-        <div className={`alert alert-${classData} d-flex align-items-center mx-0 m-4`} role="alert">
-            <p className="h5">{message}</p>
+        <div class={`alert alert-${classData} alert-dismissible fade show mx-0 m-4`} role="alert">
+            <p>{message}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     )
-
-
 
 }

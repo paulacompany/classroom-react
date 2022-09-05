@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 export default function Content() {
 
     let pages = useSelector(state => state.editor.pages)
-    let des = useSelector(state => state.editor.des)
     let password = useSelector(state => state.editor.password)
+    let type = useSelector(state => state.editor.type)
 
     const FunctionBase = useEditorFunction()
 
@@ -19,6 +19,7 @@ export default function Content() {
         addDate,
         addDes,
         addPassword,
+        addType,
         addPages,
         sendDataBase 
     } = new FunctionBase()
@@ -106,9 +107,21 @@ export default function Content() {
                 />
             </div>
             <div>
-                <p className="d-block h2 m-3">密碼:</p>
+                <p className="d-block h2 mx-3">類別:</p>
+                <p className="mx-3 text-secondary">更改自動儲存</p>
                 <input
-                    type={'password'}
+                    type="text"
+                    className="m-4 form-control"
+                    placeholder="class"
+                    onChange={e => addType(e.target.value)}
+                    value={type}
+                />
+            </div>
+            <div>
+                <p className="d-block h2 m-3">密碼:</p>
+                <p className="mx-3 text-secondary">更改自動儲存</p>
+                <input
+                    type="password"
                     className="m-4 form-control"
                     placeholder="password"
                     onChange={e => addPassword(e.target.value)}

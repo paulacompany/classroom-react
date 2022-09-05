@@ -8,10 +8,6 @@ export default function Button(){
     let deleteState = useSelector(state => state.look.deleteState)
 
     function lastDay(){
-        if(look - 1 < -14){
-            dispatch(LookPageReducer.actions.setAlert('LAST'))
-            return
-        }
         dispatch(LookPageReducer.actions.setLook(-1))
     }
 

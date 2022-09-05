@@ -27,12 +27,6 @@ export default function nav() {
                         <li className="nav-item">
                             <Link href={'/editor'}><a className="nav-link">Editor</a></Link>
                         </li>
-                        <li className="nav-item">
-                            <Link href={'/setting'}><a className="nav-link">Setting</a></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link href={'/blog'}><a className="nav-link">Blog</a></Link>
-                        </li>
                         {/* <li className="nav-item">
                             <Link href={'/test'}><a className="nav-link">Test</a></Link>
                         </li> */}

@@ -75,51 +75,6 @@ textarea {
 }
 
 
-/*setting*/
-
-.setting-container {
-    height: calc(100vh - 2.5rem);
-}
-
-.setting-container div {
-    width: 20rem;
-}
-
-
-/*about*/
-
-.about {
-    background-image: url('https://i.imgur.com/3RkwWww.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: calc(100vh - 2.5rem);
-}
-
-.about-title {
-    padding: 2rem;
-    animation-name: move;
-    animation-duration: 1s;
-    color: white;
-}
-
-
-@keyframes about {
-    from {
-        color: rgba(0, 0, 0, 0);
-    }
-
-    to {
-        color: rgba(255, 255, 255, 0.445);
-    }
-}
-
-.about-intro {
-    animation-name: about;
-    animation-duration: 2s;
-    font-weight: 100;
-    color: rgba(255, 255, 255, 0.445);
-}
-
 
 /*look*/
 
@@ -131,195 +86,6 @@ textarea {
 .item {
     list-style-type: decimal;
 }
-
-/* blog */
-
-.blog-container {
-    min-height: 100vh;
-}
-
-.post-container {
-    min-height: 100vh;
-}
-
-.body-area {
-    height: 20rem;
-}
-
-.preview-container {
-    white-space: pre-line;
-    min-height: 20rem;
-    word-break: break-all;
-}
-
-.preview-container h1, h2, h3, h4, h5, h6 {
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.preview-container p {
-    font-size: 20px;
-    line-height: 30px;
-    margin: 0!important;
-}
-
-.preview-container code {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.preview-container img {
-    max-width: 100%;
-}
-
-.preview-container pre {
-    background-color: rgb(236, 236, 236);
-    color: rgb(0, 0, 0);
-    padding: 1rem;
-}
-
-.preview-container blockquote p{
-    margin: 0;
-    padding: 0;
-    color: rgb(121, 121, 121);
-    font-size: 18px;
-    font-style: italic;
-}
-
-.preview-container blockquote{
-    border-left: 5px solid black;
-    width: fit-content;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    background-color: rgb(228, 228, 228);
-}
-
-.preview-container blockquote blockquote{
-    border: none!important;
-}
-
-
-.blog-logo {
-    background-color: rgba(248, 249, 250);
-    width: 20rem;
-    height: 25rem;
-}
-
-@keyframes changeColor {
-    from{
-        background-color: rgba(248, 249, 250);
-    }
-    to{
-        background-color: rgb(189, 189, 189);
-    }
-}
-
-.userimg{
-    max-height: 10rem;
-    max-width: 10rem;
-}
-
-.blog-logo:hover {
-    animation-duration: 0.5s;
-    animation-name: changeColor;
-    background-color: rgb(189, 189, 189);
-}
-
-.blog-body-preview{
-    width: 100%;
-    max-height: 11rem;
-    word-wrap: break-word;
-    overflow: hidden;
-    color: gray;
-    padding: 10px;
-    line-height: 25px;
-}
-
-.blog-logo img {
-   width: 20rem;
-}
-
-.img-container {
-    overflow: hidden;
-    height: 10rem;
-}
-
-@media screen and (max-width: 400px) {
-    .blog-logo{
-        width: 15rem;
-    }
-
-    .blog-logo img {
-        width: 15rem;
-    }
-}
-
-/* id or article */
-
-.id-container {
-    min-height: 100vh;
-}
-
-.id-container div {
-    white-space: pre-line;
-    word-break: break-all;
-}
-
-.id-container div h1, h2, h3, h4, h5, h6 {
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.id-container div code {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.id-container div p {
-    font-size: 20px;
-    line-height: 30px;
-    margin: 0!important;
-}
-
-.id-container div img {
-    max-width: 100%;
-}
-
-.id-container div pre {
-    background-color: rgb(236, 236, 236);
-    color: rgb(0, 0, 0);
-    padding: 1rem;
-}
-
-.id-container blockquote p{
-    margin: 0;
-    padding: 0;
-    color: rgb(121, 121, 121);
-    font-size: 18px;
-    font-style: italic;
-}
-
-.id-container blockquote{
-    border-left: 5px solid black;
-    width: fit-content;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: 2rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    background-color: rgb(228, 228, 228);
-}
-
-.id-container blockquote blockquote{
-    border: none!important;
-}
-
 
 /* login */
 
@@ -336,6 +102,13 @@ textarea {
 
 .profile-container {
     min-height: 100vh;
+}
+
+.profile-person-photo-container{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 

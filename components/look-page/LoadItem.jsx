@@ -4,77 +4,71 @@ import { useDispatch, useSelector } from "react-redux"
 import LookPageReducer from "../../common/redux/reducer/LookPageReducer.js"
 
 
-export default function LoadItem(){
+export default function LoadItem() {
     let dispatch = useDispatch()
-    // index of the number pages 0 -> today
-    let look = useSelector(state => state.look.look)
     let data = useSelector(state => state.look.data)
     let deleteState = useSelector(state => state.look.deleteState)
     let password = useSelector(state => state.look.password)
-    
-    async function change(mode, number) {
+    let type = useSelector(state => state.look.type)
 
-        if(mode == 'UNDO'){
-            dispatch(LookPageReducer.actions.setSpecifyData({index: number, state: ''}))
-        }else{
-            dispatch(LookPageReducer.actions.setSpecifyData({index: number, state: 'Del'}))
-        }
-        dispatch(LookPageReducer.actions.setDeleteState(false))
-        let fetchUrl = (mode == 'UNDO') ? 
-            `${GOOGLE_SHEET_URL}?mode=rep&rep=${number + 1}&password=${password}&repdate=${look}` :
-            `${GOOGLE_SHEET_URL}?mode=del&del=${number + 1}&password=${password}&deldate=${look}`
-        let res = await fetch(fetchUrl);
-        let dataMessage = await res.text()
-        switch (dataMessage) {
-            case 'ok':
-                dispatch(LookPageReducer.actions.setAlert('OK'))
-                break;
-            case 'password error':
+    async function change(uuid) {
+        let res = await fetch(`${GOOGLE_SHEET_URL}?mode=state&type=${type}&password=${password}&uuid=${uuid}`)
+        let status = await res.json()
+        switch (status.status) {
+            case 403:
                 dispatch(LookPageReducer.actions.setAlert('PASSWORD ERROR'))
+                break;
+            case 200:
+                dispatch(LookPageReducer.actions.setAlert('OK'))
+                handleChangeTheUiState(uuid)
                 break;
             default:
                 dispatch(LookPageReducer.actions.setAlert('ERROR'))
                 break;
         }
-        
     }
-    return(
-        data.map((item, i) => {
-            let itemData = `${item.date}${item.action}` +
-                `${item.subject}${item.book}` +
-                `${item.pages}${item.des}`
-    
-            if (!deleteState) {
-                if (item.del === 'Del') return
+
+    function handleChangeTheUiState(uuid){
+        let indexOfData = data.data.findIndex(item => item.uuid == uuid)
+        dispatch(LookPageReducer.actions.setData({
+            change: true,
+            index: indexOfData
+        }))
+    }
+
+
+
+    if(data.data) return data.data.map((item, i) => {
+        if (!deleteState) {
+            if (!item.status) return
+            return (
+                <li className="fs-4">{item.data}</li>
+            )
+        } else {
+            if (item.status) {
                 return (
-                    <li className="fs-4">{itemData}</li>
+                    <li className="fs-4">{item.data}
+                        <i className={'bi bi-x-circle-fill mx-3 text-danger'}
+                            onClick={() => {
+                                change(item.uuid)
+                            }}></i>
+                    </li>
                 )
             } else {
-                if (item.del !== 'Del') {
-                    return (
-                        <li className="fs-4">{itemData}
-                            <i className={'bi bi-x-circle-fill mx-3 text-danger'}
-                                onClick={() => {
-                                    change('DEL', i)
-                                }}></i>
-                        </li>
-                    )
-                } else {
-                    return (
-                        <li className="fs-4">{itemData}
-                            <i className={'bi bi-check mx-3 bg-success text-white rounded'}
-                                onClick={() => {
-                                    change('UNDO', i)
-                                }}></i>
-                        </li>
-                    )
-                }
+                return (
+                    <li className="fs-4">{item.data}
+                        <i className={'bi bi-check mx-3 bg-success text-white rounded'}
+                            onClick={() => {
+                                change(item.uuid)
+                            }}></i>
+                    </li>
+                )
             }
-        })
-    )
+        }
+    })
 }
 
 
-    
-    
-    
+
+
+
