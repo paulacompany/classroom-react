@@ -14,6 +14,8 @@ export default function () {
                 <link href="/css/global.css" rel="stylesheet" />
                 <script src="/js/popper.min.js"></script>
                 <script src="/js/bootstrap.bundle.min.js"></script>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5554170373239490"
+                    crossorigin="anonymous"></script>
             </Head>
             <body>
                 <Main />

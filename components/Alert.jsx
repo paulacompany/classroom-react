@@ -93,6 +93,12 @@ export default function Alert({ alert, setAlert }) {
                     alertDataDb.CANNOT_FIND_USER.classData
                 )
                 break;
+            case 'SOMEBODY USES THIS NAME':
+                setMessage(
+                    alertDataDb.SOMEONE_USE_THIS_NAME.message,
+                    alertDataDb.SOMEONE_USE_THIS_NAME.classData
+                )
+                break;
         }
         setTimeout(()=>{
             setAlert('')

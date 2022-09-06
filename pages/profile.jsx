@@ -4,6 +4,7 @@ import { profileSetting } from "../common/global/resouces"
 import Alert from "../components/Alert"
 import { GOOGLE_SHEET_URL } from "../env/config"
 import { LOGIN } from "../env/config"
+import CheckLoad from "../components/CheckLoad.jsx"
 
 export default function Profile() {
 
@@ -15,7 +16,8 @@ export default function Profile() {
     let [key, setKey] = useState('')
     let [alert, setAlert] = useState('')
     let [classType, setClassType] = useState('')
-    let [classTypePassword, setClassTypePassword] = useState(false)
+    let [classTypePassword, setClassTypePassword] = useState('')
+    let [loadState, setLoadState] = useState(false)
 
     useEffect(() => {
         let localEmail = reactLocalStorage.get('email')
@@ -23,7 +25,7 @@ export default function Profile() {
         setEmail(localEmail)
         setPassword(localPassword)
         if (!localEmail) {
-            location.href = '/'
+            location.href = '/error'
         }
         getUserInfo()
         async function getUserInfo() {
@@ -34,6 +36,7 @@ export default function Profile() {
             setPhoto(data.data.photo)
             setClassType(data.data.register)
             setClassTypePassword(data.data.one)
+            setLoadState(true)
         }
     }, [])
 
@@ -61,18 +64,29 @@ export default function Profile() {
         setKey(e.target.value)
         setData('')
     }
-    async function handleEnableClass(e){
+    async function handleEnableClass(e) {
         let res = await fetch(`${GOOGLE_SHEET_URL}?email=${email}&emailpassword=${password}&mode=register`)
         let status = await res.json()
-        if(status.status == 200){
+        if (status.status == 200) {
             location.href = '/editor'
-        }else{
-            location.href = '/'
+        } else if(status.message == 'somebody uses this name'){
+            setAlert('SOMEBODY USES THIS NAME')
+        } else {
+            location.href = '/error'
         }
+    }
+    let dot = '.'
+
+    if (!loadState) {
+        return (
+            <div className="profile-container p-5">
+                <CheckLoad loadState={loadState} />
+            </div>
+        )
     }
 
     return (
-        <div className="w-100 d-flex justify-content-center">
+        <div className="w-100 d-flex flex-column align-items-center">
             <Alert alert={alert} setAlert={setAlert} />
             <div className="container profile-container row">
                 <div className="mt-4 col-12 col-sm-4">
@@ -127,8 +141,20 @@ export default function Profile() {
                             >
                                 enable class
                             </button>
-                            <p>Your class: {classType}</p>
-                            {classTypePassword ? 'You already setting the class password' : 'You haven\'t setting the class password'}
+                            <p className="mt-2 mb-0 text-secondary">
+                                Your class : {''}
+                                <span className="h5 text-dark fw-blob">
+                                    {classType}
+                                </span>
+                            </p>
+                            <p className="mt-2 mb-0 text-secondary">
+                                Your class password : {' '}
+                                <span className="text-dark h5">
+                                    {
+                                        dot.repeat(classTypePassword.length)
+                                    }
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>

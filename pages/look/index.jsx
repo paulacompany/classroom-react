@@ -1,13 +1,15 @@
 import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { GOOGLE_SHEET_URL } from "../env/config"
+import { GOOGLE_SHEET_URL } from "../../env/config"
 import { reactLocalStorage } from "reactjs-localstorage";
-import CheckLoad from "../components/CheckLoad";
-import Bottom from "../components/look-page/Button";
-import LoadItem from "../components/look-page/LoadItem";
-import Title from "../components/look-page/Title.jsx";
-import LookPageReducer from "../common/redux/reducer/LookPageReducer.js";
-import Alert from "../components/Alert";
+import CheckLoad from "../../components/CheckLoad";
+import Bottom from "../../components/look-page/Button";
+import LoadItem from "../../components/look-page/LoadItem";
+import Title from "../../components/look-page/Title.jsx";
+import LookPageReducer from "../../common/redux/reducer/LookPageReducer.js";
+import Alert from "../../components/Alert";
+import { useRef } from "react";
+import Link from "next/link";
 
 export default function Look() {
     let dispatch = useDispatch()
@@ -15,6 +17,7 @@ export default function Look() {
     let loadState = useSelector(state => state.look.loadState)
     let alert = useSelector(state => state.look.alert)
     let type = useSelector(state => state.look.type)
+    let firstTime = useRef(true)
 
     useEffect(() => {
         let localPassword = reactLocalStorage.get('classPassword')
@@ -25,25 +28,33 @@ export default function Look() {
 
     useEffect(() => {
         async function getData() {
+            if(firstTime.current){
+                firstTime.current = false
+                return
+            }
+            if(!type){
+                location.href = '/look/setting'
+                return
+            }
             let fetchURL = `${GOOGLE_SHEET_URL}?number=${look}&mode=look&type=${type}`
             let res = await fetch(fetchURL)
             let data = await res.json()
-            if(data.status == 200){
+            console.log(data);
+            if (data.status == 200) {
                 dispatch(LookPageReducer.actions.setData(data))
-            }else if(data.status == 403){
-                dispatch(LookPageReducer.actions.setAlert('PASSWORD ERROR'))
-            }else{
+            } else {
                 dispatch(LookPageReducer.actions.setAlert('ERROR'))
+                location.href = '/look/setting'
+                return
             }
-            
+
             dispatch(LookPageReducer.actions.setLoadState(true))
         }
-        if(!type) return
-        getData()
+        getData();
     }, [look, type])
 
-    function clearAlert(value){
-        dispatch(LookPageReducer.actions.alert(value))
+    function clearAlert(value) {
+        dispatch(LookPageReducer.actions.setAlert(value))
     }
 
     return (
@@ -51,6 +62,9 @@ export default function Look() {
             <div>
                 <div className="m-5 mx-0">
                     <Alert alert={alert} setAlert={clearAlert} />
+                    <Link href="/look/setting">
+                        <a className="h6">setting {'>'}</a>
+                    </Link>
                     <CheckLoad loadState={loadState} />
                 </div>
                 <div className="fs-2 m-4">

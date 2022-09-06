@@ -13,7 +13,7 @@ export default function Verify() {
         let url = location.href
         let urlFormat = new URL(url);
         let parameter = urlFormat.searchParams.get('email');
-        if (!parameter) location.href = '/'
+        if (!parameter) location.href = '/error'
         setEmail(parameter)
     }, [])
 

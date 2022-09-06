@@ -134,3 +134,9 @@ textarea {
 .test-subject-container{
     min-height: 5rem;
 }
+
+/* error */
+
+.error-container{
+    height: 100vh;
+}

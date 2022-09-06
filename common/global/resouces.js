@@ -86,6 +86,10 @@ const alertDataDb = {
     CANNOT_FIND_USER:{
         message: 'Cannot find this user',
         classData: 'warning'
+    },
+    SOMEONE_USE_THIS_NAME:{
+        message: 'Somebody uses this name.',
+        classData: 'warning'
     }
 }
 
