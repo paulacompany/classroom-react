@@ -34,7 +34,7 @@ export default function nav() {
                             <Link href={'/profile'}><a className="nav-link">Profile</a></Link>
                         </li>
                         <li className="nav-item">
-                            <Link href={'/blog/article?id=37'}><a className="nav-link">About</a></Link>
+                            <Link href="https://blog.classroomeditor.tk/2022/09/about-us.html"><a className="nav-link">About</a></Link>
                         </li>
                         <li className="nav-item">
                             <Link href={'/login'}><a className="nav-link">Login</a></Link>

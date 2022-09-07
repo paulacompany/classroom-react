@@ -20,19 +20,32 @@ export default function Look() {
     let firstTime = useRef(true)
 
     useEffect(() => {
+        let hash = location.hash.substring(1);
         let localPassword = reactLocalStorage.get('classPassword')
         let localType = reactLocalStorage.get('type')
-        dispatch(LookPageReducer.actions.setPassword(localPassword))
-        dispatch(LookPageReducer.actions.setType(localType))
+        if (hash != '') {
+            dispatch(LookPageReducer.actions.setType(hash))
+            dispatch(LookPageReducer.actions.setPassword(localPassword))
+            return
+        } else {
+            if (!localType) {
+                location.href = '/look/setting'
+                return
+            } else {
+                location.href += '#' + localType
+                location.reload();
+            }
+        }
+
     }, [])
 
     useEffect(() => {
         async function getData() {
-            if(firstTime.current){
+            if (firstTime.current) {
                 firstTime.current = false
                 return
             }
-            if(!type){
+            if (!type) {
                 location.href = '/look/setting'
                 return
             }

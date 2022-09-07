@@ -12,10 +12,10 @@ export default function Footer() {
                 <a href="mailto:letterpaulsand@gmail.com"><i className="bi bi-envelope text-white mx-2 h3"></i></a>
             </div>
             <div className="m-3 d-flex flex-row flex-wrap">
-                <a className="h5 mx-2 text-white" href="/blog/article?id=38">Policy</a>
-                <a className="h5 mx-2 text-white" href="/blog/article?id=30">License</a>
-                <a className="h5 mx-2 text-white" href="/blog/article?id=30">Server</a>
-                <a className="h5 mx-2 text-white" href="/blog/article?id=30">Technology</a>
+                <a className="h5 mx-2 text-white" href="https://blog.classroomeditor.tk/2022/09/privacy-policy.html">Policy</a>
+                <a className="h5 mx-2 text-white" href="https://blog.classroomeditor.tk/2022/07/what-is-this-blogger-about.html">License</a>
+                <a className="h5 mx-2 text-white" href="https://blog.classroomeditor.tk/2022/07/what-is-this-blogger-about.html">Server</a>
+                <a className="h5 mx-2 text-white" href="https://blog.classroomeditor.tk/2022/07/what-is-this-blogger-about.html">Technology</a>
             </div>
             <div className="text-secondary m-3">
                 <p className="h6">MIT Classroom ©</p>

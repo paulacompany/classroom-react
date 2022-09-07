@@ -1,13 +1,6 @@
-# classroom-react
+# classroom editor
 
-classroom是一個使用react framework nextjs，
-接下來有幾個部分。接下去看吧。
+ser on my blog
 
-1. 介紹
-1. 使用
-1. 外部引用
-1. 製作介紹
-
-## 介
-
-
+1. [editor app](https://classroomeditor.tk)
+1. [blog app](https://blog.classroomeditor.tk)
