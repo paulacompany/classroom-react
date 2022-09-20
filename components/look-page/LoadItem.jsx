@@ -2,6 +2,7 @@ import React from "react"
 import { GOOGLE_SHEET_URL } from "../../env/config.js"
 import { useDispatch, useSelector } from "react-redux"
 import LookPageReducer from "../../common/redux/reducer/LookPageReducer.js"
+import { reactLocalStorage } from "reactjs-localstorage"
 
 
 export default function LoadItem() {
@@ -14,6 +15,8 @@ export default function LoadItem() {
     async function change(uuid) {
         let res = await fetch(`${GOOGLE_SHEET_URL}?mode=state&type=${type}&password=${password}&uuid=${uuid}`)
         let status = await res.json()
+        let dataStorage = reactLocalStorage.get('data_storage')
+        let dataStorageFormat = JSON.parse(dataStorage)
         switch (status.status) {
             case 403:
                 dispatch(LookPageReducer.actions.setAlert('PASSWORD ERROR'))
@@ -21,10 +24,22 @@ export default function LoadItem() {
             case 200:
                 dispatch(LookPageReducer.actions.setAlert('OK'))
                 handleChangeTheUiState(uuid)
+                findItem(uuid)
                 break;
             default:
                 dispatch(LookPageReducer.actions.setAlert('ERROR'))
                 break;
+        }
+        function findItem(uuid){
+            for(var i = 0; i <= dataStorageFormat.data.length - 1; i++){
+                let thisData = dataStorageFormat.data[i]
+                if(thisData.uuid == uuid){
+                    dataStorageFormat.data[i].status = !dataStorageFormat.data[i].status
+                    let dataFormatJson = JSON.stringify(dataStorageFormat)
+                    reactLocalStorage.set('data_storage', dataFormatJson)
+                    return
+                }
+            }
         }
     }
 

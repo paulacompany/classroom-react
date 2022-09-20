@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { GOOGLE_SHEET_URL } from "../../env/config"
 import { reactLocalStorage } from "reactjs-localstorage";
 import CheckLoad from "../../components/CheckLoad";
-import Bottom from "../../components/look-page/Button";
+import Button from "../../components/look-page/Button";
 import LoadItem from "../../components/look-page/LoadItem";
 import Title from "../../components/look-page/Title.jsx";
 import LookPageReducer from "../../common/redux/reducer/LookPageReducer.js";
@@ -18,6 +18,7 @@ export default function Look() {
     let alert = useSelector(state => state.look.alert)
     let type = useSelector(state => state.look.type)
     let firstTime = useRef(true)
+    let dataCache = useRef([])
 
     useEffect(() => {
         let hash = location.hash.substring(1);
@@ -41,6 +42,7 @@ export default function Look() {
 
     useEffect(() => {
         async function getData() {
+            dispatch(LookPageReducer.actions.setLoadState(false))
             if (firstTime.current) {
                 firstTime.current = false
                 return
@@ -49,12 +51,31 @@ export default function Look() {
                 location.href = '/look/setting'
                 return
             }
+            let dataStorage = reactLocalStorage.get('data_storage')
+            if (dataStorage && look == 0) {
+                let dataStorageFormat = JSON.parse(dataStorage)
+                dispatch(LookPageReducer.actions.setData(dataStorageFormat))
+            }
+            let previousData = identifyNumber(look)
+            if (previousData) {
+                dispatch(LookPageReducer.actions.setData(previousData))
+                dispatch(LookPageReducer.actions.setLoadState(true))
+                getTheCache(look - 1)
+                getTheCache(look - 2)
+                return
+            }
             let fetchURL = `${GOOGLE_SHEET_URL}?number=${look}&mode=look&type=${type}`
             let res = await fetch(fetchURL)
             let data = await res.json()
-            console.log(data);
             if (data.status == 200) {
                 dispatch(LookPageReducer.actions.setData(data))
+                if (look == 0) {
+                    reactLocalStorage.set('data_storage', JSON.stringify(data))
+                }
+                await getTheCache(look - 1)
+                await getTheCache(look - 2)
+            } else if (data.message == 'over range') {
+                dispatch(LookPageReducer.actions.setAlert('LAST'))
             } else {
                 dispatch(LookPageReducer.actions.setAlert('ERROR'))
                 location.href = '/look/setting'
@@ -64,6 +85,27 @@ export default function Look() {
             dispatch(LookPageReducer.actions.setLoadState(true))
         }
         getData();
+        async function getTheCache(number) {
+            dispatch(LookPageReducer.actions.setLoadState(true))
+            if(identifyNumber(number)) return
+            let fetchURL = `${GOOGLE_SHEET_URL}?number=${number}&mode=look&type=${type}`
+            let res = await fetch(fetchURL)
+            let data = await res.json()
+            if (data.status == 200) {
+                let dataClone = data
+                dataClone.number = number
+                dataCache.current.push(dataClone)
+            }
+            console.log('getTheCache');
+        }
+        function identifyNumber(number) {
+            for (var i = 0; i <= dataCache.current.length - 1; i++) {
+                if (dataCache.current[i].number == number) {
+                    return dataCache.current[i]
+                }
+            }
+            return false
+        }
     }, [look, type])
 
     function clearAlert(value) {
@@ -87,7 +129,7 @@ export default function Look() {
                     <LoadItem />
                 </ul>
             </div>
-            <Bottom />
+            <Button />
         </div>
     )
 
