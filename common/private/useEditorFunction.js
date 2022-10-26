@@ -91,7 +91,7 @@ export default function useEditorFunction() {
         async sendDataBase() {
             if (!clickStates) return
             dispatch(EditorPageReducer.actions.clickStates(false))
-            let mixData = `${date}${doing}${subject}${book}${pages}${des}`
+            let mixData = `${date}${doing}${subject}${book}${pages.replace('+', '%2B')}${des.replace('+', '%2B')}`
             if(mixData == ''){
                 dispatch(EditorPageReducer.actions.clickStates(true))
                 return
