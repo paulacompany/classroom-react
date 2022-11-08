@@ -18,11 +18,11 @@ export default function () {
                     crossorigin="anonymous"></script>
                 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QWR4ZQET5"></script>
                 <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments)}
+                    gtag('js', new Date());
 
-                gtag('config', 'G-1QWR4ZQET5');
+                    gtag('config', 'G-1QWR4ZQET5');
                 </script>
             </Head>
             <body>
